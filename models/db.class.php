@@ -299,7 +299,11 @@ class db
                 MapPosY = '125',
                 PkLevel = 3,
                 RESETS = (RESETS + 1),
-                LevelUpPoint = (" . CHARACTER_RESET_LEVEL_UP_POINTS . " + (" . CHARACTER_RESET_LEVEL_UP_POINTS . " * RESETS))
+                LevelUpPoint = (" . CHARACTER_RESET_LEVEL_UP_POINTS . " + (" . CHARACTER_RESET_LEVEL_UP_POINTS . " * RESETS)),
+                mLevel = '0',
+                mlPoint = '0',
+                mlExperience = '0',
+                mlNextExp = '0'
             WHERE
                 Name = :name
         ";
@@ -461,6 +465,30 @@ class db
         $db = new db();
         $query = $db->pdo->prepare($sql);
         $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->execute();
+        $results = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            return $results['OnlineCount'];
+        }
+        return 0;
+    }
+
+    public static function getOnlineAccountsCountPerServer($serverName) {
+        $sql = '
+            SELECT 
+                COUNT(memb___id) as OnlineCount
+            FROM 
+                MEMB_STAT
+            WHERE 
+                ConnectStat = 1
+            AND 
+                ServerName = :serverName
+        ';
+        $db = new db();
+        $query = $db->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':serverName', $serverName, PDO::PARAM_STR);
         $query->execute();
         $results = $query->fetch(PDO::FETCH_ASSOC);
 

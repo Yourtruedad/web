@@ -44,8 +44,14 @@ body {
     color: #ffffff;
     font-weight: bold;
 }
+.display-inline-block {
+    display: inline-block;
+}
 .left-margin {
     margin-left: 10px;
+}
+.right-margin {
+    margin-right: 10px;
 }
 .top-margin {
     margin-top: 10px;
@@ -88,10 +94,6 @@ body {
 .navbar-fixed-top,
 .navbar-fixed-bottom {
   -webkit-font-smoothing: antialiased;
-}
-.starter-template {
-    padding: 40px 15px;
-    text-align: center;
 }
 .footer {
     position: absolute;
@@ -147,4 +149,28 @@ body {
 }
 .form-signin .help-block {
     font-size: 10px;
+}
+.server-status {
+    width: 100%;
+    background: #121f27;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+.server-online {
+    min-height: 70px;
+    width: 100%;
+    background: url('../img/server-online.png') no-repeat left center;
+    padding-left: 67px;
+}
+.server-offline {
+    min-height: 70px;
+    width: 100%;
+    background: url('../img/server-offline.png') no-repeat left center;
+    padding-left: 67px;
+}
+.server-offline-color {
+    color: #BF7985;
+}
+.server-online-color {
+    color: #4B9E59;
 }

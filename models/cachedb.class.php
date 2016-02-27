@@ -4,21 +4,32 @@ class cacheDb
 {
     private $pdo;
 
+    public $cacheDbStatus = true;
+
     public $onlineCountServerInformationName = 'online_count';
 
     const CACHE_PLAYER_ONLINE_COUNT_TIME = 10; // in minutes
 
     public function __construct() {
-       $this->pdo = $this->dbConnect();
+        $this->pdo = $this->dbConnect();
+        if(NULL === $this->pdo) {
+            $this->cacheDbStatus = false;
+        }
     }
 
     private function dbConnect() {
+        $pdo = NULL;
         try {
             $pdo = new PDO('mysql:host=' . CONFIG_MYSQL_DATABASE_HOST . ';dbname=' . CONFIG_MYSQL_DATABASE_NAME . ';charset=utf8', CONFIG_MYSQL_DATABASE_USER, CONFIG_MYSQ_DATABASE_PASSWORD);
         } catch (PDOException $exception) {
-            echo $exception;
+            //echo $exception;
         }
         return $pdo;
+    }
+
+    public static function getCacheDbConnectionStatus() {
+        $cacheDb = new cacheDb();
+        return $cacheDb->cacheDbStatus;
     }
 
     public function getCurrentBasicRankingDetails() {

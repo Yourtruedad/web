@@ -4,7 +4,10 @@ class common
 {
     const SERVER_IP = '188.209.52.29';
 
-    const GAMESERVER_PORT = 56900;
+    public $gameserverInformation = [
+        'passive' => 56900,
+        'active' => 56901
+    ];
 
     public function secureStringVariable($string) {
     	if (!empty($string)) {
@@ -97,13 +100,55 @@ class common
         return $value;
     }
 
-    public function checkifGameServerIsOnline() {
+    public function checkifServerIsOnline() {
+        // Tu sprawdzamy czy chociaz jeden serwer jest online
         /*$connection = fsockopen(self::SERVER_IP, self::GAMESERVER_PORT);//, $errno, $errstr, 5);
         if (false !== $connection) {
             return true;
         }
         return false;*/
         return true;
+    }
+
+    public function getServerOnlineCount($type) {
+        $onlineCount = 0;
+        if ('global' === $type) {
+            if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+                $cacheDb = new cacheDb();
+                if (true === $cacheDb->checkIfServerInformationIsCurrent($cacheDb->onlineCountServerInformationName)) {
+                    $serverInformation = $cacheDb->getCurrentServerInformation($cacheDb->onlineCountServerInformationName);
+                    if (!empty($serverInformation)) {
+                        $onlineCount = $serverInformation['value'];
+                    } else {
+                        $onlineCount = db::getOnlineAccountsCount();
+                    }
+                } else {
+                    $onlineCount = db::getOnlineAccountsCount();
+                    $cacheDb->saveCurrentServerInformation($cacheDb->onlineCountServerInformationName, cacheDb::CACHE_PLAYER_ONLINE_COUNT_TIME, $onlineCount);
+                }
+            } else {
+                $onlineCount = db::getOnlineAccountsCount();
+            }
+        } else {
+            if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+                $cacheDb = new cacheDb();
+                if (true === $cacheDb->checkIfServerInformationIsCurrent($type . '_' . $cacheDb->onlineCountServerInformationName)) {
+                    $serverInformation = $cacheDb->getCurrentServerInformation($type . '_' . $cacheDb->onlineCountServerInformationName);
+                    if (!empty($serverInformation)) {
+                        $onlineCount = $serverInformation['value'];
+                    } else {
+                        $onlineCount = db::getOnlineAccountsCountPerServer($type);
+                    }
+                } else {
+                    $onlineCount = db::getOnlineAccountsCountPerServer($type);
+                    $cacheDb->saveCurrentServerInformation($type . '_' . $cacheDb->onlineCountServerInformationName, cacheDb::CACHE_PLAYER_ONLINE_COUNT_TIME, $onlineCount);
+                }
+            } else {
+                $onlineCount = db::getOnlineAccountsCountPerServer($type);
+            }
+        }
+
+        return $onlineCount;
     }
 }
 

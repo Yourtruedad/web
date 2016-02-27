@@ -42,21 +42,11 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
+                        <li <?php echo ('main' === $module) ? 'class="active"' : '' ?>><a href="index.php"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
                         <li <?php echo ('register' === $module) ? 'class="active"' : '' ?>><a href="?module=register">Sign Up</a></li>
                         <li <?php echo ('download' === $module) ? 'class="active"' : '' ?>><a href="?module=download">Download</a></li>
                         <li <?php echo ('ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=ranking">Ranking</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>
                     </ul>
                     <?php if (!empty($accountId)) {
                         echo '<div class="navbar-right">
@@ -68,7 +58,7 @@
                             </div>';
                     } else {
                     ?>
-                    <form class="navbar-form navbar-right" action="?module=account" method="post">
+                    <form class="navbar-form navbar-right navbar-input-group" action="?module=account" method="post">
                         <div class="form-group">
                             <input type="text" placeholder="User Name" name="user" class="form-control" required>
                         </div>

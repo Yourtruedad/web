@@ -30,6 +30,21 @@ class character {
         98 => ['name' => 'Fist Master', 'short_name_thumbnail' => 'rf']
     ];
 
+    public static $characterLevelSystemName = 'cLevel';
+    public static $characterResetSystemName = 'Reset';
+    public static $characterMasterLevelSystemName = 'mLevel';
+    public static $characterClassSystemName = 'Class';
+    public static $characterNameSystemName = 'Name';
+    public static $characterCountrySystemName = 'Country';
+    public static $characterStatusOnlineSystemName = 'StatusOnline';
+    public static $characterStrengthSystemName = 'Strength';
+    public static $characterDexteritySystemName = 'Dexterity';
+    public static $characterVitalitySystemName = 'Vitality';
+    public static $characterEnergySystemName = 'Energy';
+    public static $characterLeadershipSystemName = 'Leadership';
+    public static $characterLevelUpPointSystemName = 'LevelUpPoint';
+    public static $characterMoneySystemName = 'Money';
+
     public static $characterMaxLevel = 400;
 
     public static $characterBaseStats = [
@@ -65,7 +80,9 @@ class character {
     public function hideRankingCharacterDetail($string) {
         if (true === $this->hideRankingCharacterDetails) {
             if (is_numeric($string)) {
-                if (10 > $string) {
+                if (0 == $string) {
+                    return $string;
+                } elseif (10 > $string) {
                     return 'x';
                 } elseif (100 > $string) {
                     return $string[0] . 'X';
@@ -147,4 +164,6 @@ class character {
             return $baseStats;
         }
     }
+
+
 } 

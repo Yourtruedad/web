@@ -6,7 +6,7 @@
 $character = new character();
 $character->hideRankingCharacterDetails = true;
 
-if (true === USE_MYSQL_CACHE) {
+if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
     $cacheDb = new cacheDb();
     if (true === $cacheDb->checkIfBasicRankingIsCurrent()) {
         $characterRanking = $cacheDb->getCurrentBasicRanking();
@@ -31,12 +31,12 @@ if (!empty($characterRanking)) {
         foreach ($characterRanking as $rank => $characterDetails) {
             echo '<tr>
                     <td>' . ($rank + 1) . '</td>
-                    <td>' . $characterDetails['Name'] . ' ' , (1 == $characterDetails['StatusOnline']) ? '<span class="glyphicon glyphicon-flash" title="Player Connected" alt="Player Connected"></span>' : '' , '</td>
-                    <td><span class="bfh-countries" data-country="' . $characterDetails['Country'] . '" data-flags="true"></span></td>
-                    <td>' . character::getCharacterClassName($characterDetails['Class']) . '</td>
-                    <td>' . $character->hideRankingCharacterDetail($characterDetails['Reset']) . '</td>
-                    <td>' . $character->hideRankingCharacterDetail($characterDetails['cLevel']) . '</td>
-                    <td>' . $character->hideRankingCharacterDetail($characterDetails['mLevel']) . '</td>
+                    <td>' . $characterDetails[character::$characterNameSystemName] . ' ' , (1 == $characterDetails[character::$characterStatusOnlineSystemName]) ? '<span class="glyphicon glyphicon-flash" title="Player Connected" alt="Player Connected"></span>' : '' , '</td>
+                    <td><span class="bfh-countries" data-country="' . $characterDetails[character::$characterCountrySystemName] . '" data-flags="true"></span></td>
+                    <td>' . character::getCharacterClassName($characterDetails[character::$characterClassSystemName]) . '</td>
+                    <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterResetSystemName]) . '</td>
+                    <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterLevelSystemName]) . '</td>
+                    <td>' . $characterDetails[character::$characterMasterLevelSystemName] . '</td>
                 </tr>';
         }
         ?>
