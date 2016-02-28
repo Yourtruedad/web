@@ -111,7 +111,7 @@ class common
     }
 
     public function checkIfGameServerIsOnline($name) {
-        $connection = fsockopen(self::SERVER_IP, $this->gameserverInformation[$name], $errno, $errstr, 5);
+        $connection = fsockopen(self::SERVER_IP, $this->gameserverInformation[$name], $errno, $errstr, 3);
         if (false !== $connection) {
             return 'online';
         }
