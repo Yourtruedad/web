@@ -110,6 +110,14 @@ class common
         return true;
     }
 
+    public function checkIfGameServerIsOnline($name) {
+        $connection = fsockopen(self::SERVER_IP, $this->gameserverInformation[$name], $errno, $errstr, 5);
+        if (false !== $connection) {
+            return 'online';
+        }
+        return 'offline';
+    }
+
     public function getServerOnlineCount($type) {
         $onlineCount = 0;
         if ('global' === $type) {
