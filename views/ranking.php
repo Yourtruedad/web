@@ -45,7 +45,7 @@ if (!empty($characterRanking)) {
 
 <?php
 
-} elseif (true === db::getDbConnectionStatus()) {
+} elseif (false === db::getDbConnectionStatus()) {
     echo '<div class="bg-danger info-box box-border">This module is not available at the moment. Please try again later.</div>';
 } else {
     echo '<div class="bg-primary info-box box-border">No characters in the ranking so far.</div>';
