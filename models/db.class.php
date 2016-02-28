@@ -4,9 +4,14 @@ class db
 {
     public $pdo;
 
+    public $dbStatus = true;
+
     public function __construct() 
     {
         $this->pdo = $this->dbConnect();
+        if(NULL === $this->pdo) {
+            $this->dbStatus = false;
+        }
     } 
 
     public function dbConnect() 
@@ -14,9 +19,14 @@ class db
         try {
             $pdo = new PDO('sqlsrv:server=' . CONFIG_DATABASE_HOST . ';Database=' . CONFIG_DATABASE_NAME, CONFIG_DATABASE_USER, CONFIG_DATABASE_PASSWORD);
         } catch (PDOException $exception) {
-            echo $exception;
+            //echo $exception;
         }
         return $pdo;
+    }
+
+    public static function getDbConnectionStatus() {
+        $db = new db();
+        return $db->dbStatus;
     }
 
     public function getMembInfo() 
