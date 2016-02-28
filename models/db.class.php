@@ -134,6 +134,10 @@ class db
 
     // Get characters for main ranking
     public static function getCharacterRanking() {
+        if (false === db::getDbConnectionStatus()) {
+            return [];
+        }
+        
         $sql = "
             SELECT
                 Name,
