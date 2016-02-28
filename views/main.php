@@ -26,7 +26,7 @@
                 <div class="server-online">
                     <p class="lead">Server Active</p>
                     <?php 
-                    $serverStatus = $common->checkIfGameServerIsOnline('active');//'online'; //tu pobieramy status on/off dla serwera active
+                    $serverStatus = $common->checkIfGameServerIsOnline('active');
                     echo '<span class="display-inline-block right-margin">Status: ' . ('online' === $serverStatus ? '<span class="server-online-color">' . $serverStatus . '</span>' : '<span class="server-offline-color">' . $serverStatus . '</span>') . '</span>' . ('online' === $serverStatus ? 'Connected Players: ' . $common->getServerOnlineCount('active') : '');
                     ?>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="server-offline">
                     <p class="lead">Server Passive</p>
                     <?php 
-                    $serverStatus = 'online'; //tu pobieramy status on/off dla serwera active
+                    $serverStatus = $common->checkIfGameServerIsOnline('passive');
                     echo '<span class="display-inline-block right-margin">Status: ' . ('online' === $serverStatus ? '<span class="server-online-color">' . $serverStatus . '</span>' : '<span class="server-offline-color">' . $serverStatus . '</span>') . '</span>' . ('online' === $serverStatus ? 'Connected Players: ' . $common->getServerOnlineCount('passive') : '');
                     ?>
                 </div>
