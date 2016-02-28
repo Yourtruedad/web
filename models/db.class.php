@@ -16,6 +16,7 @@ class db
 
     public function dbConnect() 
     {
+        $pdo = NULL;
         try {
             $pdo = new PDO('sqlsrv:server=' . CONFIG_DATABASE_HOST . ';Database=' . CONFIG_DATABASE_NAME, CONFIG_DATABASE_USER, CONFIG_DATABASE_PASSWORD);
         } catch (PDOException $exception) {
