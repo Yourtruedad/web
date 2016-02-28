@@ -8,7 +8,11 @@ class cacheDb
 
     public $onlineCountServerInformationName = 'online_count';
 
+    public $gameserverStatusInformationName = 'game_status';
+
     const CACHE_PLAYER_ONLINE_COUNT_TIME = 10; // in minutes
+
+    const CACHE_GAMESERVER_STATUS_TIME = 3; // in minutes
 
     public function __construct() {
         $this->pdo = $this->dbConnect();

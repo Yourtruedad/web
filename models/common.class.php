@@ -111,11 +111,29 @@ class common
     }
 
     public function checkIfGameServerIsOnline($name) {
-        $connection = fsockopen(self::SERVER_IP, $this->gameserverInformation[$name], $errno, $errstr, 3);
-        if (false !== $connection) {
-            return 'online';
+        $gameserverStatus = 'offline';
+        if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+            $cacheDb = new cacheDb();
+            if (true === $cacheDb->checkIfServerInformationIsCurrent($cacheDb->onlineCountServerInformationName)) {
+                $serverInformation = $cacheDb->getCurrentServerInformation($cacheDb->onlineCountServerInformationName);
+                if (!empty($serverInformation)) {
+                    $gameserverStatus = $serverInformation['value'];
+                }
+            } else {
+                $connection = fsockopen(self::SERVER_IP, $this->gameserverInformation[$name], $errno, $errstr, 3);
+                if (false !== $connection) {
+                    $gameserverStatus = 'online';
+                }
+                $cacheDb->saveCurrentServerInformation($cacheDb->gameserverStatusInformationName, cacheDb::CACHE_GAMESERVER_STATUS_TIME, $gameserverStatus);
+            }
+        } else {
+            $connection = fsockopen(self::SERVER_IP, $this->gameserverInformation[$name], $errno, $errstr, 3);
+            if (false !== $connection) {
+                $gameserverStatus = 'online';
+            }
+            $gameserverStatus = 'offline';
         }
-        return 'offline';
+        return $gameserverStatus;
     }
 
     public function getServerOnlineCount($type) {
