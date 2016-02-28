@@ -7,7 +7,7 @@
 
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="../../favicon.ico">
+        <link rel="icon" href="views/img/favicon.ico">
         <title>EverWinter MU Online - Private Server</title>
 
         <!-- Bootstrap core CSS -->
