@@ -22,21 +22,25 @@ if ($_POST) {
                         if (true === $common->validatePasswordLength($password)) {
                             if (true === $common->validateUserName($username)) {
                                 if (true === $common->validateCountryName($country)) {
-                                    $db = new db();
-                                    if (true === $db->checkIfUserNameIsAvailable($username)) {
-                                        if (true === $db->checkIfEmailIsAvailable($email)) {
-                                            if (true === $db->createUserAccount($username, $email, $password, $country)) {
-                                                echo '<div class="bg-success info-box box-border">Account created successfully (user name: <b>' . $username . '</b>).</div>';
-                                                unset($username);
-                                                unset($email);
+                                    if (true === db::getDbConnectionStatus()) {
+                                        $db = new db();
+                                        if (true === $db->checkIfUserNameIsAvailable($username)) {
+                                            if (true === $db->checkIfEmailIsAvailable($email)) {
+                                                if (true === $db->createUserAccount($username, $email, $password, $country)) {
+                                                    echo '<div class="bg-success info-box box-border">Account created successfully (user name: <b>' . $username . '</b>).</div>';
+                                                    unset($username);
+                                                    unset($email);
+                                                } else {
+                                                    echo '<div class="bg-danger info-box box-border">Unable to create the account. Please try again later.</div>';
+                                                }
                                             } else {
-                                                echo '<div class="bg-danger info-box box-border">Unable to create the account. Please try again later.</div>';
+                                                echo '<div class="bg-danger info-box box-border">Email address is not available.</div>';
                                             }
                                         } else {
-                                            echo '<div class="bg-danger info-box box-border">Email address is not available.</div>';
+                                            echo '<div class="bg-danger info-box box-border">User name is not available.</div>';
                                         }
                                     } else {
-                                        echo '<div class="bg-danger info-box box-border">User name is not available.</div>';
+                                        echo '<div class="bg-danger info-box box-border">This module is not available at the moment. Please try again later.</div>';
                                     }
                                 } else {
                                     echo '<div class="bg-danger info-box box-border">Invalid country name format.</div>';
