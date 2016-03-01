@@ -15,6 +15,8 @@
         </div>
         <div class="col-md-4">
             <?php
+            $mailer = new mailer();
+            var_dump($mailer->sendMail());
             /*if (true === $common->checkifServerIsOnline()) {
                 $onlineCount = $common->getServerOnlineCount('global');
                 echo 'Server online, players online: ' . $onlineCount;
