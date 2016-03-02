@@ -3,20 +3,14 @@
         <div class="col-md-8">
         	<h2>News & Updates</h2>
         	<hr>
-            <h4>Bootstrap starter template</h4>
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-            Some additional text here. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
-            <p class="text-right"><small>2016-02-26 18:39</small></p>
+            <h4>Welcome to EverWinter MU</h4>
+            <p class="lead">The server launch is scheduled to March 12, 2016 7:00 p.m.<br> Feel free to create your EverWinter MU account now.</p>
+            If you have any questions or want to find out more about the server, please reach out to us on our <a href="http://forum.everwintermu.com" title="Message Board">message board</a>. See you soon!
+            <p class="text-right"><small>2016-03-02 22:19</small></p>
 
-            <h4>Bootstrap starter template</h4>
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-            Some additional text here. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
-            <p class="text-right"><small>2016-02-26 17:39</small></p>
         </div>
         <div class="col-md-4">
             <?php
-            $mailer = new mailer();
-            var_dump($mailer->sendMail());
             /*if (true === $common->checkifServerIsOnline()) {
                 $onlineCount = $common->getServerOnlineCount('global');
                 echo 'Server online, players online: ' . $onlineCount;
