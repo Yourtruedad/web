@@ -9,5 +9,5 @@
 <ul>
 	<li>Available soon</li>
 </ul>
-<p class="lead">The patch is not mandatory is you have downloaded the client from the link above.</p>
+<p class="lead">The patch is not mandatory if you downloaded the client from the link above.</p>
 <div class="bg-primary info-box box-border">Remember that you can always reach out to us on our <a href="<?=FORUM_LINK?>" class="link-white-bold" title="Forum">message board</a> if you have any issues with the game.</div>
