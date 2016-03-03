@@ -100,7 +100,7 @@ if ($_POST) {
     </div>
     <div class="checkbox text-center">
         <label>
-            <input type="checkbox" name="terms" value="agree" required> I agree to the <a href="?module=tos" target="_blank">terms of service</a>
+            <input type="hidden" name="terms" value="agree" required><!-- I agree to the <a href="?module=tos" target="_blank">terms of service</a>-->
         </label>
     </div>
     <div id="captcha"><div class="g-recaptcha" data-sitekey="<?php echo CONFIG_RECAPTCHA_SITE_KEY; ?>"></div></div>
