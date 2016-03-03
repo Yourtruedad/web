@@ -18,23 +18,32 @@
                 //echo 'Server offline';
             }*/
             ?>
-            <div class="server-status">
-                <div class="server-online">
-                    <p class="lead">Server Active</p>
-                    <?php 
-                    $serverStatus = $common->checkIfGameServerIsOnline('active');
-                    echo '<span class="display-inline-block right-margin">Status: ' . ('online' === $serverStatus ? '<span class="server-online-color">' . $serverStatus . '</span>' : '<span class="server-offline-color">' . $serverStatus . '</span>') . '</span>' . ('online' === $serverStatus ? 'Connected Players: ' . $common->getServerOnlineCount('active') : '');
-                    ?>
+            <div class="row">
+                <div class="server-status">
+                    <div class="server-online">
+                        <p class="lead">Server Active</p>
+                        <?php 
+                        $serverStatus = $common->checkIfGameServerIsOnline('active');
+                        echo '<span class="display-inline-block right-margin">Status: ' . ('online' === $serverStatus ? '<span class="server-online-color">' . $serverStatus . '</span>' : '<span class="server-offline-color">' . $serverStatus . '</span>') . '</span>' . ('online' === $serverStatus ? 'Connected Players: ' . $common->getServerOnlineCount('active') : '');
+                        ?>
+                    </div>
                 </div>
             </div>
-            <div class="server-status">
-                <div class="server-offline">
-                    <p class="lead">Server Passive</p>
-                    <?php 
-                    $serverStatus = $common->checkIfGameServerIsOnline('passive');
-                    echo '<span class="display-inline-block right-margin">Status: ' . ('online' === $serverStatus ? '<span class="server-online-color">' . $serverStatus . '</span>' : '<span class="server-offline-color">' . $serverStatus . '</span>') . '</span>' . ('online' === $serverStatus ? 'Connected Players: ' . $common->getServerOnlineCount('passive') : '');
-                    ?>
+            <div class="row">
+                <div class="server-status">
+                    <div class="server-offline">
+                        <p class="lead">Server Passive</p>
+                        <?php 
+                        $serverStatus = $common->checkIfGameServerIsOnline('passive');
+                        echo '<span class="display-inline-block right-margin">Status: ' . ('online' === $serverStatus ? '<span class="server-online-color">' . $serverStatus . '</span>' : '<span class="server-offline-color">' . $serverStatus . '</span>') . '</span>' . ('online' === $serverStatus ? 'Connected Players: ' . $common->getServerOnlineCount('passive') : '');
+                        ?>
+                    </div>
                 </div>
+            </div>
+            <div class="row">
+                <h4>Top 5 Players</h4>
+                <hr>
+                Available soon
             </div>
         </div>
     </div>
