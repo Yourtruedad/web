@@ -28,6 +28,13 @@ if ($_POST) {
                                             if (true === $db->checkIfEmailIsAvailable($email)) {
                                                 if (true === $db->createUserAccount($username, $email, $password, $country)) {
                                                     echo '<div class="bg-success info-box box-border">Account created successfully (user name: <b>' . $username . '</b>).</div>';
+                                                    $accountNumber = $db->getAccountPersonalNumber($username);
+                                                    if (!empty($accountNumber)) {
+                                                        $mailer = new mailer();
+                                                        if (true === $mailer->sendMail($email, 'EverWinter MU Account Activation', 'Hello,<br><br>In order to activate your account, please use the link below:<br><br><a href="http://everwintermu.com/?module=email_confirmation&code=' . $accountNumber . '">http://everwintermu.com/?module=email_confirmation&code=' . $accountNumber . '</a>')) {
+                                                            
+                                                        }
+                                                    }
                                                     unset($username);
                                                     unset($email);
                                                 } else {

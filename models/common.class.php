@@ -110,6 +110,14 @@ class common
         return true;
     }
 
+    public static function generateRandomNumber($length = 13) {
+        $number = '';
+        for($x = 0; $x < $length; $x++) {
+            $number .= chr(rand(48, 57));
+        }
+        return $number;
+    }
+
     public function checkIfGameServerIsOnline($name) {
         $gameserverStatus = 'offline';
         if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {

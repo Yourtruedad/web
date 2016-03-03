@@ -165,5 +165,19 @@ class character {
         }
     }
 
-
+    public static function generateAccountPersonalNumber() {
+        $accountNumber = common::generateRandomNumber(13);
+        $db = new db();
+        $loopControl = false;
+        $loopRepeat = 0;
+        while ($loopControl === false && 50 > $loopRepeat) {
+            if (!empty($accountNumber) && true === $db->checkIfPersonalNumberIsAvailable($accountNumber)) {
+                $loopControl = true;
+            } else {
+                $accountNumber = common::generateRandomNumber(13);
+            }
+            $loopRepeat++;
+        }
+        return $accountNumber;
+    }
 } 

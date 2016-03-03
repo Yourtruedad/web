@@ -4,20 +4,12 @@
         	<h2>News & Updates</h2>
         	<hr>
             <h4>Welcome to EverWinter MU</h4>
-            <p class="lead">The server launch is scheduled to March 12, 2016 7:00 p.m.<br> Feel free to create your EverWinter MU account now.</p>
-            If you have any questions or want to find out more about the server, please reach out to us on our <a href="http://forum.everwintermu.com" title="Message Board">message board</a>. See you soon!
+            <p class="lead">The server launch is scheduled to March 12, 2016 7:00 p.m.</p>
+            Feel free to create your EverWinter MU account now. If you have any questions or want to find out more about the server, please reach out to us on our <a href="http://forum.everwintermu.com" title="Message Board">message board</a>. See you soon!
             <p class="text-right"><small>2016-03-02 22:19</small></p>
 
         </div>
         <div class="col-md-4">
-            <?php
-            /*if (true === $common->checkifServerIsOnline()) {
-                $onlineCount = $common->getServerOnlineCount('global');
-                echo 'Server online, players online: ' . $onlineCount;
-            } else {
-                //echo 'Server offline';
-            }*/
-            ?>
             <div class="row">
                 <div class="server-status">
                     <div class="server-online">

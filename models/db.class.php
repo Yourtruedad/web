@@ -30,20 +30,6 @@ class db
         return $db->dbStatus;
     }
 
-    public function getMembInfo() 
-    {
-        $sql = '
-            SELECT 
-                * 
-            FROM 
-                MEMB_INFO
-        ';
-        $runQuery = $this->pdo->query($sql);
-        $results = $runQuery->fetchAll(PDO::FETCH_ASSOC);
-
-        return $results;
-    }
-
     public function checkIfUserNameIsAvailable($username) {
         $sql = '
             SELECT
@@ -92,6 +78,8 @@ class db
 
     // Create user account
     public function createUserAccount($username, $email, $password, $country) {
+        $accountNumber = character::generateAccountPersonalNumber();
+
         $sql = "
             INSERT INTO 
                 MEMB_INFO
@@ -111,7 +99,7 @@ class db
                     :username,
                     [dbo].[fn_md5](:password,:username_password),
                     :name,
-                    '1111111111111',
+                    :number,
                     :country,
                     :email,
                     '0',
@@ -125,6 +113,7 @@ class db
         $query->bindParam(':password', $password, PDO::PARAM_STR);
         $query->bindParam(':username_password', $username, PDO::PARAM_STR);
         $query->bindParam(':name', $username, PDO::PARAM_STR);
+        $query->bindParam(':number', $accountNumber, PDO::PARAM_STR);
         $query->bindParam(':country', $country, PDO::PARAM_STR);
         $query->bindParam(':email', $email, PDO::PARAM_STR);
         $result = $query->execute();
@@ -515,5 +504,49 @@ class db
             }
         }
         return 0;
+    }
+
+    public function checkIfPersonalNumberIsAvailable($number) {
+        $sql = '
+            SELECT 
+                sno__numb
+            FROM 
+                MEMB_INFO
+            WHERE 
+                sno__numb = :number
+        ';
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':number', $number, PDO::PARAM_STR);
+        $query->execute();
+        $results = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($results)) {
+            // Number available
+            return true;
+        }
+        // Number not available
+        return false;
+    }
+
+    public function getAccountPersonalNumber($username) {
+        $sql = '
+            SELECT TOP 1
+                sno__numb
+            FROM 
+                MEMB_INFO
+            WHERE 
+                memb___id = :username
+        ';
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+            return $result['sno__numb'];
+        }
+        return '';
     }
 }
