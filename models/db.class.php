@@ -549,4 +549,21 @@ class db
         }
         return '';
     }
+
+    public function changeAccountBlocCode($username, $code) {
+        $sql = "
+            UPDATE 
+                MEMB_INFO
+            SET
+                bloc_code = :code
+            WHERE
+                memb___id = :username
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':code', $code, PDO::PARAM_INT);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $result = $query->execute();
+        return $result;
+    }
 }

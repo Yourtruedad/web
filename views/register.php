@@ -28,11 +28,15 @@ if ($_POST) {
                                             if (true === $db->checkIfEmailIsAvailable($email)) {
                                                 if (true === $db->createUserAccount($username, $email, $password, $country)) {
                                                     echo '<div class="bg-success info-box box-border">Account created successfully (user name: <b>' . $username . '</b>).</div>';
-                                                    $accountNumber = $db->getAccountPersonalNumber($username);
-                                                    if (!empty($accountNumber)) {
-                                                        $mailer = new mailer();
-                                                        if (true === $mailer->sendMail($email, 'EverWinter MU Account Activation', 'Hello,<br><br>In order to activate your account, please use the link below:<br><br><a href="http://everwintermu.com/?module=email_confirmation&code=' . $accountNumber . '">http://everwintermu.com/?module=email_confirmation&code=' . $accountNumber . '</a>')) {
-                                                            
+                                                    if (true === SEND_EMAIL_CONFIRMATION_MESSAGE) {
+                                                        $accountNumber = $db->getAccountPersonalNumber($username);
+                                                        if (!empty($accountNumber)) {
+                                                            $mailer = new mailer();
+                                                            if (true === $mailer->sendMail($email, 'EverWinter MU Account Activation', 'Hello,<br><br>In order to activate your account, please use the link below:<br><br><a href="http://everwintermu.com/?module=email_confirmation&code=' . $accountNumber . '">http://everwintermu.com/?module=email_confirmation&code=' . $accountNumber . '</a>')) {
+                                                                if (true === $db->changeAccountBlocCode($username, '1')) {
+                                                                    echo '<div class="bg-primary info-box box-border">It is necessary to confirm your email address before you can log in. A message has just been sent to you (email address: ' . $email . '). Please follow the instruction inside. It might that the message gets marked as spam so please remember to check the spam/junk folder as well.</div>';
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                     unset($username);
