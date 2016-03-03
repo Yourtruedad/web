@@ -2,34 +2,28 @@
 
 class mailer 
 {
-    public function sendMail() {
+    public function sendMail($recipient, $subject, $content) 
+    {
         $mail = new PHPMailer;
+        //$mail->SMTPDebug = 3; // Enable verbose debug output
+        $mail->isSMTP();
+        $mail->Host = CONFIG_EMAIL_NOTIFICATION_HOST;
+        $mail->Port = CONFIG_EMAIL_NOTIFICATION_PORT;
+        $mail->SMTPSecure = "none";
+        $mail->SMTPAuth = true;
+        $mail->Username = CONFIG_EMAIL_NOTIFICATION_USER;
+        $mail->Password = CONFIG_EMAIL_NOTIFICATION_PASSWORD;
 
-        $mail->SMTPDebug = 3;                               // Enable verbose debug output
+        $mail->setFrom('no-reply@everwintermu.com', 'EverWinter MU');
+        $mail->addAddress($recipient);
+        $mail->isHTML(true);
 
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = '185.49.13.28';  // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'admins';                 // SMTP username
-        $mail->Password = '';                           // SMTP password
-        $mail->SMTPSecure = 'STARTTLS';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 143;                                    // TCP port to connect to
+        $mail->Subject = $subject;
+        $mail->Body = $content;
 
-        $mail->setFrom('from@example.com', 'Mailer');
-        $mail->addAddress('p.przeworowski@gmail.com', 'Joe User');     // Add a recipient
-
-        //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-        //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-        $mail->isHTML(true);                                  // Set email format to HTML
-
-        $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-        if(!$mail->send()) {
-            return 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
-        } else {
-            return 'Message has been sent';
+        if($mail->send()) {
+            return true;
         }
+        return false;
     }
 }
