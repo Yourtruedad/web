@@ -46,7 +46,15 @@
                         <li <?php echo ('register' === $module) ? 'class="active"' : '' ?>><a href="?module=register">Sign Up</a></li>
                         <li <?php echo ('download' === $module) ? 'class="active"' : '' ?>><a href="?module=download">Download</a></li>
                         <li <?php echo ('ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=ranking">Ranking</a></li>
-                        <li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>
+                        <!--<li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="?module=server_information">Server Information</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <?php if (!empty($accountId)) {
                         echo '<div class="navbar-right">
