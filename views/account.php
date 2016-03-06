@@ -13,6 +13,22 @@ switch ($action) {
             $common->pageRedirect(WEBSITE_LINK);
         }
     break;
+    case 'change_password':
+        echo '<p class="lead">You can change here your password</p>';
+        if ($_POST) {
+
+        }
+
+        echo '<form class="form-signin" action="" method="post">
+                <label for="inputOldPassword" class="sr-only">Current Password</label>
+                <input type="password" name="oldpassword" id="inputOldPassword" class="form-control" placeholder="Current Password" required autofocus>
+                <label for="inputPassword" class="sr-only">New Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="New Password" required>
+                <label for="inputRePassword" class="sr-only">Confirm Your New Password</label>
+                <input type="password" name="repassword" id="inputRePassword" class="form-control" placeholder="Confirm Your New Password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>';
+    break;
     case 'reset':
         $name = $common->trimString($common->secureStringVariable($_GET['name']), MAX_CHARACTER_NAME_LENGTH);
         if (true === db::getDbConnectionStatus()) {
