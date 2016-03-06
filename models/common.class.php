@@ -10,70 +10,70 @@ class common
     ];
 
     public function secureStringVariable($string) {
-    	if (!empty($string)) {
+        if (!empty($string)) {
             return filter_var($string, FILTER_SANITIZE_STRING);
         }
     }
 
     public function secureEmailVariable($string) {
-    	if (!empty($string)) {
-    	    return filter_var($string, FILTER_SANITIZE_EMAIL);
-    	}
+        if (!empty($string)) {
+            return filter_var($string, FILTER_SANITIZE_EMAIL);
+        }
     }
 
     public function validateEmail($string) {
-    	if (false !== filter_var($string, FILTER_VALIDATE_EMAIL)) {
+        if (false !== filter_var($string, FILTER_VALIDATE_EMAIL)) {
             return true;
-    	}
-    	return false;
-    } 
+        }
+        return false;
+    }
 
     public function validateUserName($string) {
-    	if (preg_match('#^[a-zA-Z0-9\_]{5,10}$#i', $string)) {
+        if (preg_match('#^[a-zA-Z0-9\_]{5,10}$#i', $string)) {
             return true;
-    	}
-    	return false;
+        }
+        return false;
     }
 
     public function validateCountryName($string) {
-    	if (true === ctype_upper($string) && 2 === strlen($string)) {
+        if (true === ctype_upper($string) && 2 === strlen($string)) {
             return true;
-    	}
-    	return false;
+        }
+        return false;
     }
 
     public function validateUserNameLength($string) {
-    	if (strlen($string) >= MIN_USER_NAME_LENGTH) {
-    		// Valid if long enough
+        if (strlen($string) >= MIN_USER_NAME_LENGTH) {
+            // Valid if long enough
             return true;
-    	}
-    	return false;
+        }
+        return false;
     }
 
     public function validatePasswordLength($string) {
-    	if (strlen($string) >= MIN_PASSWORD_LENGTH) {
-    		// Valid if long enough
+        if (strlen($string) >= MIN_PASSWORD_LENGTH) {
+            // Valid if long enough
             return true;
-    	}
-    	return false;
+        }
+        return false;
     }
 
     public function trimString($string, $maxLength) {
-    	if (!empty($string)) {
-    		return substr(trim($string), 0, $maxLength);
-    	}
+        if (!empty($string)) {
+            return substr(trim($string), 0, $maxLength);
+        }
     }
 
     public function checkIfPasswordsAreTheSame($password, $password2) {
-    	if ($password === $password2) {
-    		return true;
-    	}
-    	return false;
+        if ($password === $password2) {
+            return true;
+        }
+        return false;
     }
 
     public function getFormPreviouslySentValue($value) {
         if (!empty($value)) {
-        	return $value;
+            return $value;
         }
     }
 
@@ -184,6 +184,11 @@ class common
 
         return $onlineCount;
     }
-}
 
-?>
+    public function validatePersonalCode($string) {
+        if (preg_match('#^[0-9]{' . PERSONAL_CODE_LENGTH . '}$#i', $string)) {
+            return true;
+        }
+        return false;
+    }
+}

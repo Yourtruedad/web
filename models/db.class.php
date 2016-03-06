@@ -566,4 +566,42 @@ class db
         $result = $query->execute();
         return $result;
     }
+
+    public function getAccountByPersonalNumber($code) {
+        $sql = '
+            SELECT TOP 1
+                memb___id
+            FROM 
+                MEMB_INFO
+            WHERE 
+                sno__numb = :code
+        ';
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':code', $code, PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+            return $result['memb___id'];
+        }
+        return '';
+    }
+
+    public function changeEmailCheckCode($username, $code) {
+        $sql = "
+            UPDATE 
+                MEMB_INFO
+            SET
+                mail_chek = :code
+            WHERE
+                memb___id = :username
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':code', $code, PDO::PARAM_INT);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $result = $query->execute();
+        return $result;
+    }
 }

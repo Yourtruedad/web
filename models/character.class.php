@@ -166,7 +166,7 @@ class character {
     }
 
     public static function generateAccountPersonalNumber() {
-        $accountNumber = common::generateRandomNumber(13);
+        $accountNumber = common::generateRandomNumber(PERSONAL_CODE_LENGTH);
         $db = new db();
         $loopControl = false;
         $loopRepeat = 0;
@@ -174,7 +174,7 @@ class character {
             if (!empty($accountNumber) && true === $db->checkIfPersonalNumberIsAvailable($accountNumber)) {
                 $loopControl = true;
             } else {
-                $accountNumber = common::generateRandomNumber(13);
+                $accountNumber = common::generateRandomNumber(PERSONAL_CODE_LENGTH);
             }
             $loopRepeat++;
         }
