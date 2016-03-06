@@ -45,6 +45,6 @@ if (!empty($_SESSION['AccountID'])) {
 
 include('views/template.php');
 
-session_write_close();
+//session_write_close();
 
 ?>

@@ -604,4 +604,22 @@ class db
         $result = $query->execute();
         return $result;
     }
+
+    public function changeAccountPassword($username, $password) {
+        $sql = "
+            UPDATE 
+                MEMB_INFO
+            SET
+                memb__pwd = [dbo].[fn_md5](:password,:username_password)
+            WHERE
+                memb___id = :username
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':password', $password, PDO::PARAM_STR);
+        $query->bindParam(':username_password', $username, PDO::PARAM_STR);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $result = $query->execute();
+        return $result;
+    }
 }
