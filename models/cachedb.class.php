@@ -96,12 +96,7 @@ class cacheDb
             	}
             }
             if (!empty($currentBasicRankingDetails)) {
-                $insertValuesQuery = [];
-                foreach ($ranking as $standing => $character) {
-                    $insertValuesQuery[] = "(" . $currentBasicRankingDetails['id'] . ", " .  ($standing + 1) . ", '" . $character['Name'] . "', " . common::changeNullToZero($character['StatusOnline']) . ", '" . $character['Country'] . "', '" . $character['Class'] . "', '" . $character['Reset'] . "', '" . $character['cLevel'] . "', '" . $character['mLevel'] . "')";
-                }
-                if (!empty($insertValuesQuery)) {
-                    $insertValuesQuery = implode(',', $insertValuesQuery);
+                try {
                     $sql = '
                         INSERT INTO 
                             `basic_ranking_standings` 
@@ -114,21 +109,50 @@ class cacheDb
                                 `class`, 
                                 `reset`, 
                                 `level`, 
-                                `master_level`
+                                `master_level`,
+                                `guild_name`
                             )
                         VALUES 
-                            ' . $insertValuesQuery . '
+                            (
+                                :basicRankingsId,
+                                :standing,
+                                :name,
+                                :statusOnline,
+                                :country,
+                                :class,
+                                :reset,
+                                :level,
+                                :masterLevel,
+                                :guildName
+                            )
                     ';
+
                     $query = $this->pdo->prepare($sql);
-                    $result = $query->execute();
-                    return $result;
-                }
+                    foreach ($ranking as $key => $character) {
+                        $standing = $key + 1;
+                        $onlineStatus = common::changeNullToZero($character['StatusOnline']);
+                        $query->bindParam(':basicRankingsId', $currentBasicRankingDetails['id'], PDO::PARAM_INT);
+                        $query->bindParam(':standing', $standing, PDO::PARAM_INT);
+                        $query->bindParam(':name', $character['Name'], PDO::PARAM_STR);
+                        $query->bindParam(':statusOnline', $onlineStatus, PDO::PARAM_INT);
+                        $query->bindParam(':country', $character['Country'], PDO::PARAM_STR);
+                        $query->bindParam(':class', $character['Class'], PDO::PARAM_INT);
+                        $query->bindParam(':reset', $character['Reset'], PDO::PARAM_INT);
+                        $query->bindParam(':level', $character['cLevel'], PDO::PARAM_INT);
+                        $query->bindParam(':masterLevel', $character['mLevel'], PDO::PARAM_INT);
+                        $query->bindParam(':guildName', $character['GuildName'], PDO::PARAM_STR);
+                        $result = $query->execute();
+                    }
+                } catch (PDOException $e) {
+                    return false;
+                } 
+                return true;
             }
         }
         return false;
     }
 
-    public function getCurrentBasicRanking() {
+    public function getCurrentBasicRanking($limit = 100) {
     	$currentBasicRankingDetails = $this->getCurrentBasicRankingDetails();
     	if (!empty($currentBasicRankingDetails)) {
 	        $sql = '
@@ -142,13 +166,15 @@ class cacheDb
 	                `class` AS `Class`, 
 	                `reset` AS `Reset`, 
 	                `level` AS `cLevel`, 
-	                `master_level` AS `mLevel`
+	                `master_level` AS `mLevel`,
+                    `guild_name` AS `GuildName`
 	            FROM 
 	                `basic_ranking_standings`
 	            WHERE
 	                `basic_rankings_id` = :id
 	            ORDER BY 
 	                `standing` ASC
+                LIMIT ' . $limit . '
 	        ';
 	        $query = $this->pdo->prepare($sql);
 	        //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);

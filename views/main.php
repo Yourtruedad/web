@@ -34,8 +34,25 @@
             </div>
             <div class="row">
                 <h4>Top 5 Players</h4>
-                <hr>
-                Available soon
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr><th>#</th><th>Nick</th><th>Class</th><th>Reset</th><th>Level</th></tr>
+                        <?php 
+                            $character = new character();
+                            $character->hideRankingCharacterDetails = true;
+                            $shortRanking = server::getTop5CharacterRanking(); 
+                            foreach ($shortRanking as $characterDetails) {
+                                echo '<tr>
+                                        <td>' . $characterDetails['standing'] . '</td>
+                                        <td>' . $characterDetails['Name'] . '</td>
+                                        <td>' . character::getCharacterClassName($characterDetails[character::$characterClassSystemName]) . '</td>
+                                        <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterResetSystemName]) . '</td>
+                                        <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterLevelSystemName]) . '</td>
+                                    </tr>';
+                            }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

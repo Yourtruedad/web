@@ -122,13 +122,13 @@ class db
     }
 
     // Get characters for main ranking
-    public static function getCharacterRanking() {
+    public static function getCharacterRanking($limit = 100) {
         if (false === db::getDbConnectionStatus()) {
             return [];
         }
 
         $sql = "
-            SELECT
+            SELECT TOP " . $limit . "
                 Name,
                 cLevel,
                 Class,
@@ -159,7 +159,15 @@ class db
                         collate Latin1_general_CI_AS 
                     WHERE 
                         MEMB_STAT.connectstat = 1 AND GameIDC = Name
-                ) as StatusOnline
+                ) as StatusOnline,
+                (
+                    SELECT TOP 1
+                        G_Name
+                    FROM 
+                        GuildMember
+                    WHERE 
+                        Name = Name
+                ) as GuildName
             FROM
                 Character
             WHERE 
