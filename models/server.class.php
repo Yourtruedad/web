@@ -9,16 +9,16 @@ class server
             if (true === $cacheDb->checkIfBasicRankingIsCurrent()) {
                 $characterRanking = $cacheDb->getCurrentBasicRanking(5);
                 if (empty($characterRanking)) {
-                    $characterRanking = db::getCharacterRanking(5);
+                    $characterRanking = db::getCharacterRanking();
                 }
             } else {
-                $characterRanking = db::getCharacterRanking(5);
+                $characterRanking = db::getCharacterRanking();
                 $cacheDb->saveBasicRankingStandings($characterRanking);
             }
         } else {
-            $characterRanking = db::getCharacterRanking(5);
+            $characterRanking = db::getCharacterRanking();
         }
 
-        return $characterRanking;
+        return array_slice($characterRanking, 0, 5);
     }
 }

@@ -41,9 +41,9 @@
                             $character = new character();
                             $character->hideRankingCharacterDetails = true;
                             $shortRanking = server::getTop5CharacterRanking(); 
-                            foreach ($shortRanking as $characterDetails) {
+                            foreach ($shortRanking as $key => $characterDetails) {
                                 echo '<tr>
-                                        <td>' . $characterDetails['standing'] . '</td>
+                                        <td>' . ($key + 1) . '</td>
                                         <td>' . $characterDetails['Name'] . '</td>
                                         <td>' . character::getCharacterClassName($characterDetails[character::$characterClassSystemName]) . '</td>
                                         <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterResetSystemName]) . '</td>
