@@ -263,7 +263,8 @@ class db
                 Leadership,
                 Money,
                 mLevel,
-                RESETS as Reset
+                RESETS as Reset,
+                MagicList
             FROM
                 Character
             WHERE
