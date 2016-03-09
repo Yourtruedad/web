@@ -264,7 +264,7 @@ class db
                 Money,
                 mLevel,
                 RESETS as Reset,
-                MagicList
+                CONVERT (VARCHAR(1000), MagicList, 2) as MagicList
             FROM
                 Character
             WHERE
@@ -629,6 +629,24 @@ class db
         $query->bindParam(':username_password', $username, PDO::PARAM_STR);
         $query->bindParam(':username', $username, PDO::PARAM_STR);
         $result = $query->execute();
+        return $result;
+    }
+
+    public function updateCharacterMagicList($name, $magicList) {
+        $sql = "
+            UPDATE 
+                Character
+            SET
+                MagicList = CONVERT(varbinary(450), :magicList)
+            WHERE
+                Name = :name
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':magicList', $magicList, PDO::PARAM_STR);
+        $query->bindParam(':name', $name, PDO::PARAM_STR);
+        $result = $query->execute();
+        return $query->errorInfo();
         return $result;
     }
 }

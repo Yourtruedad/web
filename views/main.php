@@ -54,6 +54,12 @@
                     </table>
                 </div>
             </div>
+            <div class="row">
+                <h4>Vote For Us</h4>
+                <hr>
+                <a href="https://mu.mmotop.ru/servers/24601"; target="_blank"><img src="http://img.mmotop.ru/mmo_24601.png"; border="0" id="mmotopratingimg" alt="Рейтинг серверов mmotop"></a>
+                <script type="text/javascript">document.write("<script src='http://js.mmotop.ru/rating_code.js?"; + Math.round((((new Date()).getUTCDate() + (new Date()).getMonth() * 30) / 7)) + "_" + (new Date()).getFullYear() + "' type='text/javascript'><\/script>");</script>
+            </div>
         </div>
     </div>
 </div>
