@@ -17,7 +17,7 @@ switch ($action) {
         if (!empty($accountId)) {
             $db = new db();
             if (true === db::getDbConnectionStatus()) {
-                $accountEmail = $db->getAccountEmail();
+                $accountEmail = $db->getAccountEmail($accountId);
                 if (!empty($accountEmail)) {
                     $payments = new payment();
                     echo $payments->getPaymentWallWidget($accountId, $accountEmail, common::generateRandomNumber());
