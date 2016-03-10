@@ -20,7 +20,7 @@ switch ($action) {
                 $accountEmail = $db->getAccountEmail($accountId);
                 if (!empty($accountEmail)) {
                     $payments = new payment();
-                    $paymentWallPaymentUrl = $payments->getPaymentWallWidget($accountId, $accountEmail, common::generateRandomNumber());
+                    $paymentWallPaymentUrl = $payments->getPaymentWallWidget('link', $accountId, $accountEmail, common::generateRandomNumber());
 					echo '<p class="lead">You can buy WCoins through PaymentWall (multiple payment methods supported).</p>
 					Click here to proceed to the payment system.<p class="text-center"><a href="' . $paymentWallPaymentUrl . '" title="Paymentwall" target="_blank"><img src="views/img/paymentwall.jpg" class="img-responsive" alt="PaymentWall"></a></p>';
 					

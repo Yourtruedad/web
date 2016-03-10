@@ -10,7 +10,7 @@ class payment
         '174.37.14.28',
     ];
 
-    public function getPaymentWallWidget($username, $email, $transactionId) {
+    public function getPaymentWallWidget($type, $username, $email, $transactionId) {
         if (!empty($username) && !empty($email)) {
             Paymentwall_Config::getInstance()->set([
                 'api_type' => Paymentwall_Config::API_VC,
@@ -26,7 +26,11 @@ class payment
                     'email' => $email, 
                     'trans_id' => $transactionId]
             );
-            return $widget->getUrl();
+            if ('link' === $type) {
+                return $widget->getUrl();
+            } elseif ('widget' === $type) {
+                return $widget->getHtmlCode();
+            }
         }
         return '';
     }
