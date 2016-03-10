@@ -13,6 +13,14 @@ switch ($action) {
             $common->pageRedirect(WEBSITE_LINK);
         }
     break;
+    case 'wcoins':
+        if (!empty($accountId)) {
+            $payments = new payment();
+            echo $payments->getPaymentWallWidget();
+        } else {
+            $common->pageRedirect(WEBSITE_LINK);
+        }
+    break;
     case 'change_password':
         if (!empty($accountId)) {
             echo '<p class="lead">Here you can change your account password</p>';
