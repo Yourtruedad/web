@@ -15,8 +15,18 @@ switch ($action) {
     break;
     case 'wcoins':
         if (!empty($accountId)) {
-            $payments = new payment();
-            echo $payments->getPaymentWallWidget();
+            $db = new db();
+            if (true === db::getDbConnectionStatus()) {
+                $accountEmail = $db->getAccountEmail();
+                if (!empty($accountEmail)) {
+                    $payments = new payment();
+                    echo $payments->getPaymentWallWidget($accountId, $accountEmail, common::generateRandomNumber());
+                } else {
+                    echo '<div class="bg-danger info-box box-border">Internal error (CODE W01).</div>';
+                }
+            } else {
+                echo '<div class="bg-danger info-box box-border">This module is not available at the moment. Please try again later.</div>';
+            }
         } else {
             $common->pageRedirect(WEBSITE_LINK);
         }

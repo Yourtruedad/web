@@ -649,4 +649,25 @@ class db
         return $query->errorInfo();
         return $result;
     }
+
+    public function getAccountEmail($username) {
+        $sql = '
+            SELECT TOP 1
+                mail_addr
+            FROM 
+                MEMB_INFO
+            WHERE 
+                memb___id = :username
+        ';
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+            return $result['mail_addr'];
+        }
+        return '';
+    }
 }
