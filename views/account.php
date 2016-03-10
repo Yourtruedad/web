@@ -20,7 +20,7 @@ switch ($action) {
                 $accountEmail = $db->getAccountEmail($accountId);
                 if (!empty($accountEmail)) {
                     $payments = new payment();
-                    echo $payments->getPaymentWallWidget($accountId, $accountEmail, common::generateRandomNumber());
+                    $paymentWallPaymentUrl = $payments->getPaymentWallWidget($accountId, $accountEmail, common::generateRandomNumber());
                 } else {
                     echo '<div class="bg-danger info-box box-border">Internal error (CODE W01).</div>';
                 }
