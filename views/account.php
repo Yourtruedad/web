@@ -2,6 +2,10 @@
 
 <?php
 
+if (empty($accountId)) {
+    echo '<p class="lead">Please log in to your account first</p>';
+}
+
 $character = new character();
 
 switch ($action) {
@@ -31,7 +35,7 @@ switch ($action) {
                 echo '<div class="bg-danger info-box box-border">This module is not available at the moment. Please try again later.</div>';
             }
         } else {
-            $common->pageRedirect(WEBSITE_LINK);
+            $common->pageRedirect(WEBSITE_LINK . WEBSITE_ACCOUNT_LINK);
         }
     break;
     case 'change_password':
