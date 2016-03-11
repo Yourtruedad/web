@@ -2,19 +2,24 @@
 
 class payment 
 {
-    public function getPaymentWallWidget() {
-        Paymentwall_Config::getInstance()->set(array(
-            'api_type' => Paymentwall_Config::API_VC,
-            'public_key' => 't_4108e4214e854ec742196e1af48094',
-            'private_key' => 't_cbcf72a060331d2174ede5f81ae177'
-        ));
+    public function getPaymentWallWidget($username, $email, $transactionId) {
+		if (!empty($username) && !empty($email)) {
+			Paymentwall_Config::getInstance()->set([
+				'api_type' => Paymentwall_Config::API_VC,
+				'public_key' => CONFIG_PAYMENTWALL_PUBLIC_KEY,
+				'private_key' => CONFIG_PAYMENTWALL_PRIVATE_KEY
+			]);
 
-        $widget = new Paymentwall_Widget(
-            'user40012', 
-            'p4',
-            array(), 
-            array('email' => 'user@hostname.com', 'any_custom_parameter' => 'value')
-        );
-        return $widget->getHtmlCode();
+			$widget = new Paymentwall_Widget(
+				$username, 
+				'p10',
+				[], 
+				[
+					'email' => $email, 
+					'trans_id' => $transactionId]
+			);
+			return $widget->getUrl();
+		}
+		return '';
     }
 }
