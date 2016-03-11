@@ -59,6 +59,10 @@ body {
 .clear-both {
     clear: both;
 }
+.margin-center {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* Custom elements */
 #logo {

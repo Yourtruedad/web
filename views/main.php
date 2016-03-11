@@ -11,9 +11,7 @@
         </div>
         <div class="col-md-4">
             <div class="row">
-                <div class="server-status">
-                    <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive" alt="Get WCoins"></a>
-                </div>
+                <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
             </div>
             <div class="row">
                 <div class="server-status">
