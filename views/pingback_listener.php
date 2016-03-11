@@ -1,7 +1,7 @@
 <?php
 
-$payment = new payment();
-if (in_array($_SERVER['HTTP_X_REAL_IP'], payment::$paymentwallIps) || $accountId = 'pablo') {
+if ((!empty ($_SERVER['HTTP_X_REAL_IP']) && in_array($_SERVER['HTTP_X_REAL_IP'], payment::$paymentwallIps)) || $accountId = 'pablo') {
+	$payment = new payment();
     $pingback = new Paymentwall_Pingback($_GET, $_SERVER['REMOTE_ADDR']);
     if ($pingback->validate()) {
         $virtualCurrency = $pingback->getVirtualCurrencyAmount();
