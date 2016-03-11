@@ -11,9 +11,6 @@
         </div>
         <div class="col-md-4">
             <div class="row">
-                <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
-            </div>
-            <div class="row">
                 <div class="server-status">
                     <div class="server-online">
                         <p class="lead">Server Active</p>
@@ -36,6 +33,9 @@
                 </div>
             </div>
             <div class="row">
+                <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
+            </div>
+            <div class="row">
                 <h4>Top 5 Players</h4>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -55,7 +55,7 @@
                                         </tr>';
                                 }
                             } else {
-                                echo 'No characters found';
+                                echo '<tr><td colspan="5">No characters found</td></tr>';
                             }
                         ?>
                     </table>
