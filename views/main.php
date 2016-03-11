@@ -1,8 +1,8 @@
 <div> 
     <div class="row">
         <div class="col-md-8">
-        	<h2>News & Updates</h2>
-        	<hr>
+            <h2>News & Updates</h2>
+            <hr>
             <h4>Welcome to EverWinter MU</h4>
             <p class="lead">The server launch is scheduled to March 12, 2016 7:00 p.m. (GMT+1)</p>
             Feel free to create your EverWinter MU account now. If you have any questions or want to find out more about the server, please reach out to us on our <a href="http://forum.everwintermu.com" title="Message Board">message board</a>. See you soon!
@@ -59,12 +59,12 @@
                 <hr>
                 <a href="https://mu.mmotop.ru/servers/24601"; target="_blank"><img src="http://img.mmotop.ru/mmo_24601.png"; width="88" height="53" border="0" id="mmotopratingimg" alt="Рейтинг серверов mmotop"></a>
                 <script type="text/javascript">document.write("<script src='http://js.mmotop.ru/rating_code.js?"; + Math.round((((new Date()).getUTCDate() + (new Date()).getMonth() * 30) / 7)) + "_" + (new Date()).getFullYear() + "' type='text/javascript'><\/script>");</script>
-				<a href="http://www.xtremetop100.com/in.php?site=1132359020" title="Mu Online Server">
-				<img src="http://www.xtremeTop100.com/votenew.jpg" border="0" alt="Mu Online Server"></a>
-				<a href="http://www.gtop100.com/topsites/Mu-Online/sitedetails/EverWinter-NEW-x27-SERVER-ON-12-MARCH-90096?vote=1" title="Mu Online Private Server" target="_blank">
-				<img src="http://www.gtop100.com/images/votebutton.jpg" border="0" alt="Mu Online Private Server"></a> 
-				<a href="https://topg.org/mu-private-servers/in-427882" target="_blank"><img src="https://topg.org/topg.gif" width="88" height="53" border="0" alt="mu private servers"></a>
-			</div>
+                <a href="http://www.xtremetop100.com/in.php?site=1132359020" title="Mu Online Server">
+                <img src="http://www.xtremeTop100.com/votenew.jpg" border="0" alt="Mu Online Server"></a>
+                <a href="http://www.gtop100.com/topsites/Mu-Online/sitedetails/EverWinter-NEW-x27-SERVER-ON-12-MARCH-90096?vote=1" title="Mu Online Private Server" target="_blank">
+                <img src="http://www.gtop100.com/images/votebutton.jpg" border="0" alt="Mu Online Private Server"></a> 
+                <a href="https://topg.org/mu-private-servers/in-427882" target="_blank"><img src="https://topg.org/topg.gif" width="88" height="53" border="0" alt="mu private servers"></a>
+            </div>
         </div>
     </div>
 </div>
