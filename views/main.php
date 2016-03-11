@@ -34,6 +34,7 @@
             </div>
             <div class="row">
                 <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
+                <hr>
             </div>
             <div class="row">
                 <h4>Top 5 Players</h4>
