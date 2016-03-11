@@ -12,6 +12,11 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="server-status">
+                    <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive" alt="Get WCoins"></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="server-status">
                     <div class="server-online">
                         <p class="lead">Server Active</p>
                         <?php 
@@ -41,14 +46,18 @@
                             $character = new character();
                             $character->hideRankingCharacterDetails = true;
                             $shortRanking = server::getTop5CharacterRanking(); 
-                            foreach ($shortRanking as $key => $characterDetails) {
-                                echo '<tr>
-                                        <td>' . ($key + 1) . '</td>
-                                        <td>' . $characterDetails['Name'] . '</td>
-                                        <td>' . character::getCharacterClassName($characterDetails[character::$characterClassSystemName]) . '</td>
-                                        <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterResetSystemName]) . '</td>
-                                        <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterLevelSystemName]) . '</td>
-                                    </tr>';
+                            if (!empty($shortRanking)) {
+                                foreach ($shortRanking as $key => $characterDetails) {
+                                    echo '<tr>
+                                            <td>' . ($key + 1) . '</td>
+                                            <td>' . $characterDetails['Name'] . '</td>
+                                            <td>' . character::getCharacterClassName($characterDetails[character::$characterClassSystemName]) . '</td>
+                                            <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterResetSystemName]) . '</td>
+                                            <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterLevelSystemName]) . '</td>
+                                        </tr>';
+                                }
+                            } else {
+                                echo 'No characters found';
                             }
                         ?>
                     </table>
