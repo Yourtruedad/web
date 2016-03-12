@@ -9,6 +9,14 @@ class payment
         '174.36.96.66',
         '174.37.14.28',
     ];
+	
+	public static $paypalWcoinPackages = [
+	    '200 Wcoin',
+		'500 Wcoin',
+		'1000 Wcoin',
+		'2000 Wcoin',
+		'5000 Wcoin'
+	];
 
     public function getPaymentWallWidget($type, $username, $email, $transactionId) {
         if (!empty($username) && !empty($email)) {
@@ -34,4 +42,20 @@ class payment
         }
         return '';
     }
+	
+	public function getUniquePaypalTransactionToken() {
+		$token = common::generateRandomString();
+        $cacheDb = new cacheDb();
+        $loopControl = false;
+        $loopRepeat = 0;
+        while ($loopControl === false && 50 > $loopRepeat) {
+            if (!empty($token) && true === $cacheDb->checkIfPaypalTransactionTokenIsAvailable($token)) {
+                $loopControl = true;
+            } else {
+                $token = common::generateRandomNumber(PERSONAL_CODE_LENGTH);
+            }
+            $loopRepeat++;
+        }
+        return $token;
+	}
 }

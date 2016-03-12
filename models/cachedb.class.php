@@ -263,4 +263,75 @@ class cacheDb
         }
         return [];
     }
+	
+	public function createPaypalTransaction($username, $token) {
+		$sql = '
+            INSERT INTO 
+                `paypal_transactions`
+                (
+                    `transaction_token`,
+                    `username`
+                )
+            VALUES
+                (
+                    :token,
+                    :username
+                )
+        ';
+        $query = $this->pdo->prepare($sql);
+        //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':token', $token, PDO::PARAM_STR);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $result = $query->execute();
+        return $result;
+	}
+	
+	public function checkIfPaypalTransactionTokenIsAvailable($token) {
+        $sql = '
+            SELECT 
+                transaction_token
+            FROM 
+                paypal_transactions
+            WHERE 
+                transaction_token = :token
+        ';
+        $query = $this->pdo->prepare($sql);
+        //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':token', $token, PDO::PARAM_STR);
+        $query->execute();
+        $results = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($results)) {
+            // Token available
+            return true;
+        }
+        // Token not available
+        return false;
+    }
+	
+	public function getPaypalTransactionDetailsByToken($token) {
+        $sql = '
+            SELECT
+                `id`,
+                `transaction_token`,
+                `username`,
+                `status`,
+                `created_on`
+            FROM
+                `paypal_transactions`
+			WHERE
+			    `transaction_token` = :token
+            LIMIT 1
+        ';
+
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(':token', $token, PDO::PARAM_STR);
+        $result = $query->execute();
+        $results = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            return $results;
+        }
+        return [];
+    }
 }

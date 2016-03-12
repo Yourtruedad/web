@@ -173,9 +173,10 @@ switch ($action) {
             if (true === db::getDbConnectionStatus()) {
                 $db = new db();
                 $characters = $db->getAccountCharacters($accountId);
+				echo '<ul class="list-inline"><li><strong>Navigation</strong></li><li>/</li><li><a href="?module=account&action=change_password">Change Your Account Password</a></li><li>/</li><li><a href="?module=account&action=wcoins">Buy WCoins</a></li></ul>';
                 if (!empty($characters)) {
                     $warehouseMoney = $db->getAccountWarehouseMoney($accountId);
-                    echo '<div class="pull-right"><a href="?module=account&action=change_password">Change Your Account Password</a></div><br><hr><div class="pull-right">Warehouse money: ' , (false !== $warehouseMoney) ? number_format($warehouseMoney[character::$characterMoneySystemName]) : '0' , '</div>';
+                    echo '<div class="pull-right">Warehouse money: ' , (false !== $warehouseMoney) ? number_format($warehouseMoney[character::$characterMoneySystemName]) : '0' , '</div><br>';
                     foreach ($characters as $character) {
                         $content .= '<div class="width100percent clear-both">
                             <h3>' . $character['Name'] . ' <small>' . character::getCharacterClassName($character[character::$characterClassSystemName]) . '</small></h3>

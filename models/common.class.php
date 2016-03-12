@@ -191,4 +191,23 @@ class common
         }
         return false;
     }
+	
+	public function writeToFile($filename, $content) {
+		$myfile = fopen($filename, "w") or die("Unable to open file!");
+        fwrite($myfile, $content);
+        fclose($myfile);
+	}
+	
+	public static function generateRandomString($length = 32) {
+        $string = '';
+        for($x = 0; $x < $length; $x++) {
+			$type = rand(0,1);
+			if (0 === $type) {
+				$string .= chr(rand(97, 122));
+			} elseif (1 === $type) {
+                $string .= chr(rand(48, 57));
+			}
+        }
+        return $string;
+    }
 }
