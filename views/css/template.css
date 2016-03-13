@@ -64,7 +64,7 @@ body {
     margin-right: auto;
 }
 .padding-right {
-	padding-right: 10px;
+    padding-right: 10px;
 }
 
 /* Custom elements */
@@ -97,8 +97,8 @@ body {
     margin: 0 10px;
 }
 #eventList {
-	height: 250px;
-	overflow-y:auto;
+    height: 250px;
+    overflow-y:auto;
 }
 /* --- */
 

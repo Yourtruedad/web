@@ -90,10 +90,10 @@ class cacheDb
         if (!empty($ranking)) {
             $currentBasicRankingDetails = $this->getCurrentBasicRankingDetails();
             if (empty($currentBasicRankingDetails)) {
-            	$newBasicRanking = $this->saveNewBasicRanking();
-            	if (true === $newBasicRanking) {
-            		$currentBasicRankingDetails = $this->getCurrentBasicRankingDetails();
-            	}
+                $newBasicRanking = $this->saveNewBasicRanking();
+                if (true === $newBasicRanking) {
+                    $currentBasicRankingDetails = $this->getCurrentBasicRankingDetails();
+                }
             }
             if (!empty($currentBasicRankingDetails)) {
                 try {
@@ -153,37 +153,37 @@ class cacheDb
     }
 
     public function getCurrentBasicRanking($limit = 100) {
-    	$currentBasicRankingDetails = $this->getCurrentBasicRankingDetails();
-    	if (!empty($currentBasicRankingDetails)) {
-	        $sql = '
-	            SELECT
-	                `id`,
-	                `basic_rankings_id`,
-	                `standing`,
-	                `name` AS `Name`,
+        $currentBasicRankingDetails = $this->getCurrentBasicRankingDetails();
+        if (!empty($currentBasicRankingDetails)) {
+            $sql = '
+                SELECT
+                    `id`,
+                    `basic_rankings_id`,
+                    `standing`,
+                    `name` AS `Name`,
                     `status_online` AS `StatusOnline`,
-	                `country` AS `Country`, 
-	                `class` AS `Class`, 
-	                `reset` AS `Reset`, 
-	                `level` AS `cLevel`, 
-	                `master_level` AS `mLevel`,
+                    `country` AS `Country`, 
+                    `class` AS `Class`, 
+                    `reset` AS `Reset`, 
+                    `level` AS `cLevel`, 
+                    `master_level` AS `mLevel`,
                     `guild_name` AS `GuildName`
-	            FROM 
-	                `basic_ranking_standings`
-	            WHERE
-	                `basic_rankings_id` = :id
-	            ORDER BY 
-	                `standing` ASC
+                FROM 
+                    `basic_ranking_standings`
+                WHERE
+                    `basic_rankings_id` = :id
+                ORDER BY 
+                    `standing` ASC
                 LIMIT ' . $limit . '
-	        ';
-	        $query = $this->pdo->prepare($sql);
-	        //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            ';
+            $query = $this->pdo->prepare($sql);
+            //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $query->bindParam(':id', $currentBasicRankingDetails['id'], PDO::PARAM_INT);
-	        $query->execute();
-	        $results = $query->fetchAll(PDO::FETCH_ASSOC);
-	        if (!empty($results)) {
-	        	return $results;
-	        }
+            $query->execute();
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($results)) {
+                return $results;
+            }
         }
         return [];
     }
@@ -263,9 +263,9 @@ class cacheDb
         }
         return [];
     }
-	
-	public function createPaypalTransaction($username, $token) {
-		$sql = '
+    
+    public function createPaypalTransaction($username, $token) {
+        $sql = '
             INSERT INTO 
                 `paypal_transactions`
                 (
@@ -284,9 +284,9 @@ class cacheDb
         $query->bindParam(':username', $username, PDO::PARAM_STR);
         $result = $query->execute();
         return $result;
-	}
-	
-	public function checkIfPaypalTransactionTokenIsAvailable($token) {
+    }
+    
+    public function checkIfPaypalTransactionTokenIsAvailable($token) {
         $sql = '
             SELECT 
                 transaction_token
@@ -308,8 +308,8 @@ class cacheDb
         // Token not available
         return false;
     }
-	
-	public function getPaypalTransactionDetailsByToken($token) {
+    
+    public function getPaypalTransactionDetailsByToken($token) {
         $sql = '
             SELECT
                 `id`,
@@ -319,8 +319,8 @@ class cacheDb
                 `created_on`
             FROM
                 `paypal_transactions`
-			WHERE
-			    `transaction_token` = :token
+            WHERE
+                `transaction_token` = :token
             LIMIT 1
         ';
 
@@ -334,14 +334,14 @@ class cacheDb
         }
         return [];
     }
-	
-	public function completePaypalTransaction($token, $product) {
-		$sql = '
+    
+    public function completePaypalTransaction($token, $product) {
+        $sql = '
             UPDATE 
                 `paypal_transactions`
             SET
-			    status = 1,
-				product = :product
+                status = 1,
+                product = :product
             WHERE
                 transaction_token = :token
         ';
@@ -350,50 +350,50 @@ class cacheDb
         $query->bindParam(':product', $product, PDO::PARAM_STR);
         $query->bindParam(':token', $token, PDO::PARAM_STR);
         $result = $query->execute();
-		//return $query->errorInfo();
+        //return $query->errorInfo();
         return $result;
-	}
-	
-	public function savePaypalIpn($token, $product) {
-		$sql = '
+    }
+    
+    public function savePaypalIpn($token, $product) {
+        $sql = '
             INSERT INTO 
                 `paypal_ipn`
                 (
                     `token`,
-					product
+                    product
                 )
             VALUES
                 (
                     :token,
-					:product
+                    :product
                 )
         ';
         $query = $this->pdo->prepare($sql);
         //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         $query->bindParam(':token', $token, PDO::PARAM_STR);
-		$query->bindParam(':product', $product, PDO::PARAM_STR);
+        $query->bindParam(':product', $product, PDO::PARAM_STR);
         $result = $query->execute();
         return $result;
-	}
-	
-	public function getPaypalIpnsPerUser($username) {
-		$sql = '
+    }
+    
+    public function getPaypalIpnsPerUser($username) {
+        $sql = '
             SELECT
-			    pi.id,
-			    pi.token,
+                pi.id,
+                pi.token,
                 pi.`product`,
-				pt.username,
-				pt.status
+                pt.username,
+                pt.status
             FROM
                 `paypal_ipn` pi
-			JOIN 
-			    paypal_transactions pt
-			ON 
-			    pi.token = pt.transaction_token
-			WHERE 
-			    pt.username = :username
-			AND
-				pt.status = 0
+            JOIN 
+                paypal_transactions pt
+            ON 
+                pi.token = pt.transaction_token
+            WHERE 
+                pt.username = :username
+            AND
+                pt.status = 0
         ';
 
         $query = $this->pdo->prepare($sql);
@@ -405,5 +405,5 @@ class cacheDb
             return $results;
         }
         return [];
-	}
+    }
 }

@@ -9,14 +9,14 @@ class payment
         '174.36.96.66',
         '174.37.14.28',
     ];
-	
-	public static $paypalWcoinPackages = [
-	    '200 Wcoin',
-		'500 Wcoin',
-		'1000 Wcoin',
-		'2000 Wcoin',
-		'5000 Wcoin'
-	];
+    
+    public static $paypalWcoinPackages = [
+        '200 Wcoin',
+        '500 Wcoin',
+        '1000 Wcoin',
+        '2000 Wcoin',
+        '5000 Wcoin'
+    ];
 
     public function getPaymentWallWidget($type, $username, $email, $transactionId) {
         if (!empty($username) && !empty($email)) {
@@ -42,9 +42,9 @@ class payment
         }
         return '';
     }
-	
-	public function getUniquePaypalTransactionToken() {
-		$token = common::generateRandomString();
+    
+    public function getUniquePaypalTransactionToken() {
+        $token = common::generateRandomString();
         $cacheDb = new cacheDb();
         $loopControl = false;
         $loopRepeat = 0;
@@ -57,22 +57,22 @@ class payment
             $loopRepeat++;
         }
         return $token;
-	}
-	
-	public function completePaypalTransactions($username) {
-		$db = new db();
-		$cacheDb = new cacheDb();
-		$paypalIpns = $cacheDb->getPaypalIpnsPerUser($username);
-		foreach ($paypalIpns as $paypalIpn) {
-			$wcoinAmount = explode(' ', $paypalIpn['product']);
-			if (true === $db->checkIfAccountHasWcoinRecord($paypalIpn['username'])) {
-				//update add points
-				$db->addWcoinsForAccount($paypalIpn['username'], $wcoinAmount[0]);
-			} else {
-				//create record
-				$db->addAccountWcoinRecord($paypalIpn['username'], $wcoinAmount[0]);
-			}
-			$cacheDb->completePaypalTransaction($paypalIpn['token'], $paypalIpn['product']);
-		}
-	}
+    }
+    
+    public function completePaypalTransactions($username) {
+        $db = new db();
+        $cacheDb = new cacheDb();
+        $paypalIpns = $cacheDb->getPaypalIpnsPerUser($username);
+        foreach ($paypalIpns as $paypalIpn) {
+            $wcoinAmount = explode(' ', $paypalIpn['product']);
+            if (true === $db->checkIfAccountHasWcoinRecord($paypalIpn['username'])) {
+                //update add points
+                $db->addWcoinsForAccount($paypalIpn['username'], $wcoinAmount[0]);
+            } else {
+                //create record
+                $db->addAccountWcoinRecord($paypalIpn['username'], $wcoinAmount[0]);
+            }
+            $cacheDb->completePaypalTransaction($paypalIpn['token'], $paypalIpn['product']);
+        }
+    }
 }

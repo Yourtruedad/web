@@ -669,8 +669,8 @@ class db
         }
         return '';
     }
-	
-	public function checkIfAccountHasWcoinRecord($username) {
+    
+    public function checkIfAccountHasWcoinRecord($username) {
         $sql = '
             SELECT 
                 AccountID
@@ -692,24 +692,24 @@ class db
         // Record not present
         return false;
     }
-	
-	public function addAccountWcoinRecord($username, $points) {
+    
+    public function addAccountWcoinRecord($username, $points) {
         $sql = "
             INSERT INTO  
                 T_InGameShop_Point
-				(
-				    AccountID,
-					WCoinP,
-					WCoinC,
-					GoblinPoint
-				)
+                (
+                    AccountID,
+                    WCoinP,
+                    WCoinC,
+                    GoblinPoint
+                )
             VALUES
-			    (
-				    :username,
-					0,
-					:points,
-					0
-				)
+                (
+                    :username,
+                    0,
+                    :points,
+                    0
+                )
         ";
         $query = $this->pdo->prepare($sql);
         $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -718,8 +718,8 @@ class db
         $result = $query->execute();
         return $result;
     }
-	
-	public function addWcoinsForAccount($username, $points) {
+    
+    public function addWcoinsForAccount($username, $points) {
         $sql = "
             UPDATE 
                 T_InGameShop_Point
@@ -735,8 +735,8 @@ class db
         $result = $query->execute();
         return $result;
     }
-	
-	public function getAccountWcoinAmount($username) {
+    
+    public function getAccountWcoinAmount($username) {
         $sql = '
             SELECT 
                 WCoinC

@@ -191,51 +191,51 @@ class common
         }
         return false;
     }
-	
-	public function writeToFile($filename, $content) {
-		$myfile = fopen($filename, "w") or die("Unable to open file!");
+    
+    public function writeToFile($filename, $content) {
+        $myfile = fopen($filename, "w") or die("Unable to open file!");
         fwrite($myfile, $content);
         fclose($myfile);
-	}
-	
-	public static function generateRandomString($length = 32) {
+    }
+    
+    public static function generateRandomString($length = 32) {
         $string = '';
         for($x = 0; $x < $length; $x++) {
-			$type = rand(0,1);
-			if (0 === $type) {
-				$string .= chr(rand(97, 122));
-			} elseif (1 === $type) {
+            $type = rand(0,1);
+            if (0 === $type) {
+                $string .= chr(rand(97, 122));
+            } elseif (1 === $type) {
                 $string .= chr(rand(48, 57));
-			}
+            }
         }
         return $string;
     }
-	
-	public static function addTimeToDate($date, $format, $time, $unit) {
-		$now = new DateTime($date); //current date/time
-		if ('H' === $unit || 'M' === $unit) {
+    
+    public static function addTimeToDate($date, $format, $time, $unit) {
+        $now = new DateTime($date); //current date/time
+        if ('H' === $unit || 'M' === $unit) {
             $now->add(new DateInterval("PT{$time}{$unit}"));
-		} elseif ('D' === $unit) {
-			$now->add(new DateInterval("P{$time}{$unit}"));
-		}
+        } elseif ('D' === $unit) {
+            $now->add(new DateInterval("P{$time}{$unit}"));
+        }
         return $now->format($format);
-	}
-	
-	public static function translateDateWordToDateTimeFormat($word) {
-		if ('hour' === $word) {
-			return 'H';
-		} elseif ('minute' === $word) {
-			return 'M';
-		}
-	}
-	
-	public static function subTimeFromDate($date, $format, $time, $unit) {
-		$now = new DateTime("now", new DateTimeZone(CONFIG_SYSTEM_TIMEZONE)); //current date/time
+    }
+    
+    public static function translateDateWordToDateTimeFormat($word) {
+        if ('hour' === $word) {
+            return 'H';
+        } elseif ('minute' === $word) {
+            return 'M';
+        }
+    }
+    
+    public static function subTimeFromDate($date, $format, $time, $unit) {
+        $now = new DateTime("now", new DateTimeZone(CONFIG_SYSTEM_TIMEZONE)); //current date/time
         $now->sub(new DateInterval("PT{$time}{$unit}"));
         return $now->format($format);
-	}
-	
-	public static function currentDate($format = 'Y-m-d H:i:s') {
-		return common::subTimeFromDate(date($format), $format, CONFIG_TIMEZONE_MANUAL_ADJUST, 'H');
-	}
+    }
+    
+    public static function currentDate($format = 'Y-m-d H:i:s') {
+        return common::subTimeFromDate(date($format), $format, CONFIG_TIMEZONE_MANUAL_ADJUST, 'H');
+    }
 }
