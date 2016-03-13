@@ -334,4 +334,76 @@ class cacheDb
         }
         return [];
     }
+	
+	public function completePaypalTransaction($token, $product) {
+		$sql = '
+            UPDATE 
+                `paypal_transactions`
+            SET
+			    status = 1,
+				product = :product
+            WHERE
+                transaction_token = :token
+        ';
+        $query = $this->pdo->prepare($sql);
+        //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':product', $product, PDO::PARAM_STR);
+        $query->bindParam(':token', $token, PDO::PARAM_STR);
+        $result = $query->execute();
+		//return $query->errorInfo();
+        return $result;
+	}
+	
+	public function savePaypalIpn($token, $product) {
+		$sql = '
+            INSERT INTO 
+                `paypal_ipn`
+                (
+                    `token`,
+					product
+                )
+            VALUES
+                (
+                    :token,
+					:product
+                )
+        ';
+        $query = $this->pdo->prepare($sql);
+        //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':token', $token, PDO::PARAM_STR);
+		$query->bindParam(':product', $product, PDO::PARAM_STR);
+        $result = $query->execute();
+        return $result;
+	}
+	
+	public function getPaypalIpnsPerUser($username) {
+		$sql = '
+            SELECT
+			    pi.id,
+			    pi.token,
+                pi.`product`,
+				pt.username,
+				pt.status
+            FROM
+                `paypal_ipn` pi
+			JOIN 
+			    paypal_transactions pt
+			ON 
+			    pi.token = pt.transaction_token
+			WHERE 
+			    pt.username = :username
+			AND
+				pt.status = 0
+        ';
+
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $result = $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            return $results;
+        }
+        return [];
+	}
 }

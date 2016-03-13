@@ -25,8 +25,52 @@ switch ($action) {
                 if (!empty($accountEmail)) {
                     $payments = new payment();
                     $paymentWallPaymentUrl = $payments->getPaymentWallWidget('link', $accountId, $accountEmail, common::generateRandomNumber());
-					echo '<p class="lead">You can buy WCoins through PaymentWall (multiple payment methods supported).</p>
-					Click here to proceed to the payment system.<p class="text-center"><a href="' . $paymentWallPaymentUrl . '" title="Paymentwall" target="_blank"><img src="views/img/paymentwall.jpg" class="img-responsive" alt="PaymentWall"></a></p>';
+					//paypal
+					$token = $payments->getUniquePaypalTransactionToken();
+					$cacheDb = new cacheDb();
+					$cacheDb->createPaypalTransaction($accountId, $token);
+					echo '<p class="lead">You can buy WCoins through PayPal, Webmoney, E-transfer Polish Bank or PaymentWall (multiple payment methods supported).</p>
+					<h4>Pricing</h4>
+					<ul>
+					    <li>2$ - 200 WCoin</li>
+						<li>5$ - 500 WCoin</li>
+						<li>9$ - 1000 WCoin</li>
+						<li>18$ - 2000 WCoin</li>
+						<li>40$ - 5000 WCoin</li>
+					</ul>
+					<hr>
+					<h4>PayPal <small>Select the package of WCoins for you.</small></h4>
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="YWHWG6NAXL4FL">
+					<input type="hidden" name="custom" value="' . $token . '">
+					<table>
+					<tr><td><input type="hidden" name="on0" value="Wcoin">Wcoin</td></tr><tr><td><select name="os0">
+						<option value="200 Wcoin">200 Wcoin $2,00 USD</option>
+						<option value="500 Wcoin">500 Wcoin $5,00 USD</option>
+						<option value="1000 Wcoin">1000 Wcoin $9,00 USD</option>
+						<option value="2000 Wcoin">2000 Wcoin $18,00 USD</option>
+						<option value="5000 Wcoin">5000 Wcoin $40,00 USD</option>
+					</select> </td></tr>
+					</table>
+					<input type="hidden" name="currency_code" value="USD">
+					<input type="image" src="https://www.paypalobjects.com/webstatic/en_US/btn/btn_buynow_cc_171x47.png" border="0" name="submit" alt="PayPal – P³aæ wygodnie i bezpiecznie">
+					<img alt="" border="0" src="https://www.paypalobjects.com/pl_PL/i/scr/pixel.gif" width="1" height="1">
+					</form>
+					<hr>
+					<h4>Webmoney</h4>
+					Transfer the amount of money (according to the pricing) to the following wallet: <strong>Z183276733730</strong> providing your login name in the title/desciption of the wire. WCoins will be added within an hour.
+					<hr>
+					<h4>Polish Bank</h4>
+					After payment please contact us: <b>admins@everwintermu.com</b> and send us: <b>1. Payment ID 2. Login account where we should add wCoin</b><br>
+					<b>8 PLN - 200 Wcoin</b> <form action="https://secure.transferuj.pl" method="post" name="payment"><input name="id" value="23952" type="hidden"><input name="kwota" value="8" type="hidden"><input name="opis" value="200 Wcoin" type="hidden"><input name="md5sum" value="01a20aaf7f1f56c181c8994f9bf4aadc" type="hidden"><input type="submit" value="Buy Now" /></form>
+					<b>20 PLN - 500 WCoin</b> <form action="https://secure.transferuj.pl" method="post" name="payment"><input name="id" value="23952" type="hidden"><input name="kwota" value="20" type="hidden"><input name="opis" value="500 Wcoin" type="hidden"><input name="md5sum" value="c6253e3a304e00c237fa0aedd1fb6ad1" type="hidden"><input type="submit" value="Buy Now" /></form>
+					<b>35 PLN - 1000 Wcoin</b> <form action="https://secure.transferuj.pl" method="post" name="payment"><input name="id" value="23952" type="hidden"><input name="kwota" value="35" type="hidden"><input name="opis" value="1000 Wcoin" type="hidden"><input name="md5sum" value="c0394f62d11fdcb85cc7c3b91ade6f3b" type="hidden"><input type="submit" value="Buy Now" /></form>
+					<b>69 PLN - 2000 Wcoin</b> <form action="https://secure.transferuj.pl" method="post" name="payment"><input name="id" value="23952" type="hidden"><input name="kwota" value="69" type="hidden"><input name="opis" value="2000 Wcoin" type="hidden"><input name="md5sum" value="3d3294eeae65f19dd59b6c6e4f1be68b" type="hidden"><input type="submit" value="Buy Now" /></form>
+					<b>189 PLN - 5000 Wcoin</b> <form action="https://secure.transferuj.pl" method="post" name="payment"><input name="id" value="23952" type="hidden"><input name="kwota" value="189" type="hidden"><input name="opis" value="5000 Wcoin" type="hidden"><input name="md5sum" value="777dddac143ca79fb11deb31976a0af1" type="hidden"><input type="submit" value="Buy Now" /></form>
+					<hr>
+					<h4><s>PaymentWall <small>Click on the image below to proceed to the payment system.</small></s> <small>Not available yet</small></h4>
+					<p class="text-center"><a href="' . $paymentWallPaymentUrl . '" title="Paymentwall" target="_blank"><img src="views/img/paymentwall.jpg" class="img-responsive" alt="PaymentWall"></a></p>';
 					
                 } else {
                     echo '<div class="bg-danger info-box box-border">Internal error (CODE W01).</div>';
@@ -169,11 +213,16 @@ switch ($action) {
         }
 
         if (!empty($accountId)) {
+			$payment = new payment();
+			$payment->completePaypalTransactions($accountId);
+			
             $content = '';
             if (true === db::getDbConnectionStatus()) {
                 $db = new db();
                 $characters = $db->getAccountCharacters($accountId);
 				echo '<ul class="list-inline"><li><strong>Navigation</strong></li><li>/</li><li><a href="?module=account&action=change_password">Change Your Account Password</a></li><li>/</li><li><a href="?module=account&action=wcoins">Buy WCoins</a></li></ul>';
+				$wcoins = $db->getAccountWcoinAmount($accountId);
+				echo '<div class="pull-right"><strong>Available WCoins:</strong> ' . $wcoins . '</div><br><br>';
                 if (!empty($characters)) {
                     $warehouseMoney = $db->getAccountWarehouseMoney($accountId);
                     echo '<div class="pull-right">Warehouse money: ' , (false !== $warehouseMoney) ? number_format($warehouseMoney[character::$characterMoneySystemName]) : '0' , '</div><br>';

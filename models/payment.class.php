@@ -58,4 +58,21 @@ class payment
         }
         return $token;
 	}
+	
+	public function completePaypalTransactions($username) {
+		$db = new db();
+		$cacheDb = new cacheDb();
+		$paypalIpns = $cacheDb->getPaypalIpnsPerUser($username);
+		foreach ($paypalIpns as $paypalIpn) {
+			$wcoinAmount = explode(' ', $paypalIpn['product']);
+			if (true === $db->checkIfAccountHasWcoinRecord($paypalIpn['username'])) {
+				//update add points
+				$db->addWcoinsForAccount($paypalIpn['username'], $wcoinAmount[0]);
+			} else {
+				//create record
+				$db->addAccountWcoinRecord($paypalIpn['username'], $wcoinAmount[0]);
+			}
+			$cacheDb->completePaypalTransaction($paypalIpn['token'], $paypalIpn['product']);
+		}
+	}
 }

@@ -646,7 +646,6 @@ class db
         $query->bindParam(':magicList', $magicList, PDO::PARAM_STR);
         $query->bindParam(':name', $name, PDO::PARAM_STR);
         $result = $query->execute();
-        return $query->errorInfo();
         return $result;
     }
 
@@ -669,5 +668,94 @@ class db
             return $result['mail_addr'];
         }
         return '';
+    }
+	
+	public function checkIfAccountHasWcoinRecord($username) {
+        $sql = '
+            SELECT 
+                AccountID
+            FROM 
+                T_InGameShop_Point
+            WHERE 
+                AccountID = :username
+        ';
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $query->execute();
+        $results = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            // Record present 
+            return true;
+        }
+        // Record not present
+        return false;
+    }
+	
+	public function addAccountWcoinRecord($username, $points) {
+        $sql = "
+            INSERT INTO  
+                T_InGameShop_Point
+				(
+				    AccountID,
+					WCoinP,
+					WCoinC,
+					GoblinPoint
+				)
+            VALUES
+			    (
+				    :username,
+					0,
+					:points,
+					0
+				)
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $query->bindParam(':points', $points, PDO::PARAM_INT);
+        $result = $query->execute();
+        return $result;
+    }
+	
+	public function addWcoinsForAccount($username, $points) {
+        $sql = "
+            UPDATE 
+                T_InGameShop_Point
+            SET
+                WCoinC = (WCoinC + :points)
+            WHERE
+                AccountID = :username
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':points', $points, PDO::PARAM_INT);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $result = $query->execute();
+        return $result;
+    }
+	
+	public function getAccountWcoinAmount($username) {
+        $sql = '
+            SELECT 
+                WCoinC
+            FROM 
+                T_InGameShop_Point
+            WHERE 
+                AccountID = :username
+        ';
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+            // Record present 
+            return round($result['WCoinC']);
+        }
+        // Record not present
+        return 0;
     }
 }
