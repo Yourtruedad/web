@@ -33,7 +33,7 @@ if ($_POST) {
                                                         if (!empty($accountNumber)) {
                                                             $mailer = new mailer();
                                                             if (true === $mailer->sendMail($email, 'EverWinter MU Account Activation', 'Hello,<br><br>In order to activate your account (user name: ' . $username . '), please use the link below:<br><br><a href="http://everwintermu.com/?module=email_confirmation&code=' . $accountNumber . '">http://everwintermu.com/?module=email_confirmation&code=' . $accountNumber . '</a>')) {
-                                                                if (true === $db->changeAccountBlocCode($username, '1')) {
+                                                                if (true === $db->changeAccountBlocCode($username, '0')) {
                                                                     echo '<div class="bg-info info-box box-border top-margin">It is necessary to confirm your email address before you can log in. A message has just been sent to you (email: <b>' . $email . '</b>). Please follow the instruction inside. It might that the message gets marked as spam so please remember to check the spam/junk folder as well.</div>';
                                                                 }
                                                             }
