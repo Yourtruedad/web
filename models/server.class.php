@@ -75,7 +75,7 @@ class server
 						}
 					} else {
 						foreach ($eventDate['details'] as $eventDateTimeDetails) {
-							if ($eventDateTimeDetails['day'] === date('l', strtotime($eventDateTime)) && $eventDateTime . ' ' . $eventDateTimeDetails['time'] . ':00') {
+							if ($eventDateTimeDetails['day'] === date('l', strtotime($eventDateTime)) && $eventDateTime . ' ' . $eventDateTimeDetails['time'] . ':00' > common::currentDate('Y-m-d H:i:s')) {
 								$events[$eventName][] = $eventDateTime . ' ' . $eventDateTimeDetails['time'] . ':00';
 							}
 						}
