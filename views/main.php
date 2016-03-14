@@ -8,6 +8,7 @@
 				<p class="lead">The server launch is scheduled to March 12, 2016 7:00 p.m. (GMT+1)</p>
 				Feel free to create your EverWinter MU account now. If you have any questions or want to find out more about the server, please reach out to us on our <a href="http://forum.everwintermu.com" title="Message Board">message board</a>. See you soon!
 				<p class="text-right"><small>2016-03-02 22:19</small></p>
+				<hr>
 			</div>
 			<div class="row">
 				<h4>Upcoming Game Events</h4>
