@@ -92,7 +92,7 @@ class server
             foreach ($events as $eventName => $eventTimes) {
                 if (!empty($eventTimes)) {
                     foreach ($eventTimes as $eventTime) {
-                        $parsedEvents[] = ['event_name' => $eventName, 'event_time' => $eventTime];
+                        $parsedEvents[] = ['event_name' => $eventName, 'event_time' => $eventTime, 'event_in' => common::calculateTimeDifference(common::currentDate(), $eventTime)];
                     }
                 }
             }

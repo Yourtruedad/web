@@ -15,13 +15,13 @@
 					<table class="table table-bordered">
 						<tr>
 							<th>Name</th>
-							<th>Time</th>
+							<th>Time (GMT+1)</th>
 						</tr>
 						<?php
 						$server = new server();
 						$events = $server->prepareEvents($server->getUpcomingEvents());
 						foreach ($events as $event) {
-							echo '<tr><td>' . $event['event_name'] . '</td><td>' . $event['event_time'] . '</td></tr>';
+							echo '<tr><td>' . $event['event_name'] . '</td><td>' . $event['event_time'] . ' (left: ' . $event['event_in'] . ')</td></tr>';
 						}
 						?>
 					</table>
