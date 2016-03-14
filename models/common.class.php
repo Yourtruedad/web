@@ -210,4 +210,32 @@ class common
         }
         return $string;
     }
+	
+	public static function addTimeToDate($date, $format, $time, $unit) {
+		$now = new DateTime($date); //current date/time
+		if ('H' === $unit || 'M' === $unit) {
+            $now->add(new DateInterval("PT{$time}{$unit}"));
+		} elseif ('D' === $unit) {
+			$now->add(new DateInterval("P{$time}{$unit}"));
+		}
+        return $now->format($format);
+	}
+	
+	public static function translateDateWordToDateTimeFormat($word) {
+		if ('hour' === $word) {
+			return 'H';
+		} elseif ('minute' === $word) {
+			return 'M';
+		}
+	}
+	
+	public static function subTimeFromDate($date, $format, $time, $unit) {
+		$now = new DateTime("now", new DateTimeZone(CONFIG_SYSTEM_TIMEZONE)); //current date/time
+        $now->sub(new DateInterval("PT{$time}{$unit}"));
+        return $now->format($format);
+	}
+	
+	public static function currentDate($format = 'Y-m-d H:i:s') {
+		return common::subTimeFromDate(date($format), $format, CONFIG_TIMEZONE_MANUAL_ADJUST, 'H');
+	}
 }

@@ -19,6 +19,8 @@ spl_autoload_register(function ($className) {
 });
 // End Includes //
 
+date_default_timezone_set(CONFIG_SYSTEM_TIMEZONE);
+
 $common = new common();
 
 // Set the default module name

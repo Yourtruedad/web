@@ -1,15 +1,35 @@
 <div> 
     <div class="row">
-        <div class="col-md-8">
-            <h2>News & Updates</h2>
-            <hr>
-            <h4>Welcome to EverWinter MU</h4>
-            <p class="lead">The server launch is scheduled to March 12, 2016 7:00 p.m. (GMT+1)</p>
-            Feel free to create your EverWinter MU account now. If you have any questions or want to find out more about the server, please reach out to us on our <a href="http://forum.everwintermu.com" title="Message Board">message board</a>. See you soon!
-            <p class="text-right"><small>2016-03-02 22:19</small></p>
-
+        <div class="col-md-7">
+			<div class="row">
+				<h2>News & Updates</h2>
+				<hr>
+				<h4>Welcome to EverWinter MU</h4>
+				<p class="lead">The server launch is scheduled to March 12, 2016 7:00 p.m. (GMT+1)</p>
+				Feel free to create your EverWinter MU account now. If you have any questions or want to find out more about the server, please reach out to us on our <a href="http://forum.everwintermu.com" title="Message Board">message board</a>. See you soon!
+				<p class="text-right"><small>2016-03-02 22:19</small></p>
+			</div>
+			<div class="row">
+				<h4>Upcoming Game Events</h4>
+				<div id="eventList">
+					<table class="table table-bordered">
+						<tr>
+							<th>Name</th>
+							<th>Time</th>
+						</tr>
+						<?php
+						$server = new server();
+						$events = $server->prepareEvents($server->getUpcomingEvents());
+						foreach ($events as $event) {
+							echo '<tr><td>' . $event['event_name'] . '</td><td>' . $event['event_time'] . '</td></tr>';
+						}
+						?>
+					</table>
+				</div>
+				<br>
+			</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-md-offset-1">
             <div class="row">
                 <div class="server-status">
                     <div class="server-online">
