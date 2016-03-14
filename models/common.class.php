@@ -238,19 +238,19 @@ class common
     public static function currentDate($format = 'Y-m-d H:i:s') {
         return common::subTimeFromDate(date($format), $format, CONFIG_TIMEZONE_MANUAL_ADJUST, 'H');
     }
-	
+    
     public static function calculateTimeDifference($date, $date2) {
         $dateDiff = new DateTime($date);
         $dateDiff2 = new DateTime($date2);
         $interval = date_diff($dateDiff, $dateDiff2);
-		
-		$timeDifference = strtotime($date2) - strtotime($date);
-		if ($timeDifference > 86400) {
-			return $interval->format('%d day %h hour(s) and %i minute(s)');
-		} elseif ($timeDifference > 3600) {
-			return $interval->format('%h hour(s) and %i minute(s)');
-		} else {
-			return $interval->format('%i minute(s)');
-		}
+        
+        $timeDifference = strtotime($date2) - strtotime($date);
+        if ($timeDifference > 86400) {
+            return $interval->format('%d day %h hour(s) and %i minute(s)');
+        } elseif ($timeDifference > 3600) {
+            return $interval->format('%h hour(s) and %i minute(s)');
+        } else {
+            return $interval->format('%i minute(s)');
+        }
     }
 }

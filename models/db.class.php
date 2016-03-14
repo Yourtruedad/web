@@ -758,21 +758,21 @@ class db
         // Record not present
         return 0;
     }
-	
-	public static function getActiveAccountsRecentlyCount() {
-		if (true === db::getDbConnectionStatus()) {
-			$sql = "
-			    SELECT 
-				    count(*) as OnlineCount
-				FROM 
-				    MEMB_STAT 
-				WHERE 
-				    ConnectTM > DATEADD(DAY, -1, GETDATE()) 
-				OR 
-				    DisConnectTM > DATEADD(DAY, -1, GETDATE())
-			";
-		    $db = new db();
-			$query = $db->pdo->prepare($sql);
+    
+    public static function getActiveAccountsRecentlyCount() {
+        if (true === db::getDbConnectionStatus()) {
+            $sql = "
+                SELECT 
+                    count(*) as OnlineCount
+                FROM 
+                    MEMB_STAT 
+                WHERE 
+                    ConnectTM > DATEADD(DAY, -1, GETDATE()) 
+                OR 
+                    DisConnectTM > DATEADD(DAY, -1, GETDATE())
+            ";
+            $db = new db();
+            $query = $db->pdo->prepare($sql);
             $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $query->execute();
             $results = $query->fetch(PDO::FETCH_ASSOC);
@@ -780,7 +780,7 @@ class db
             if (!empty($results)) {
                 return $results['OnlineCount'];
             }
-		}
-		return 0;
-	}
+        }
+        return 0;
+    }
 }

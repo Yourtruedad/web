@@ -112,10 +112,10 @@ class server
         }
         return $parsedEvents;
     }
-	
-	public static function getActiveAccountsRecentlyCount() {
-		$onlineCount = 0;
-		if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+    
+    public static function getActiveAccountsRecentlyCount() {
+        $onlineCount = 0;
+        if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
             $cacheDb = new cacheDb();
             if (true === $cacheDb->checkIfServerInformationIsCurrent('active_recently_count')) {
                 $activeAccounts = $cacheDb->getCurrentServerInformation('active_recently_count');
@@ -131,6 +131,6 @@ class server
         } else {
             $onlineCount = db::getActiveAccountsRecentlyCount();
         }
-		return $onlineCount;
-	}
+        return $onlineCount;
+    }
 }

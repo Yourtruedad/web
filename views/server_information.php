@@ -6,7 +6,7 @@
 <p><strong>Max level:</strong> 400</p>
 <p>
     <strong>Exp:</strong> Dynamic, basic 27x<br>
-    Every reset lowers the exp. rate by 1%. If you have more than 25 resets, the exp. rate lowers by 2%
+    Every reset lowers the exp. rate by 1%. If you have more than 25 resets, the exp. rate lowers by 2%.
 </p>
 <p><strong>MasterExp:</strong> 13x</p>
 <p><strong>Drop:</strong> 31%</p>
