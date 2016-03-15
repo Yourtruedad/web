@@ -84,7 +84,7 @@ class character {
     public function hideRankingCharacterDetail($string) {
         if (true === $this->hideRankingCharacterDetails) {
             if (is_numeric($string)) {
-                if (0 == $string) {
+                if (4 > $string) {
                     return $string;
                 } elseif (10 > $string) {
                     return 'x';
