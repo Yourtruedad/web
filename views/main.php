@@ -4,6 +4,15 @@
             <div class="row">
                 <h2>News & Updates</h2>
                 <hr>
+                <h4>Further Changes</h4>
+                <p>We hope that you like the fact that the <strong>MuBot</strong> is now available for <strong>free</strong> on the Passive sub-server. We think it was a good change and now the Passive sub-server is more popular. However, we have made a few more changes in the configuration of the server:</p>
+                <ul>
+                    <li>We have <strong>increased</strong> the selling price of jewels in in-game shops. The new prices are now as follows: Bless - 690 000, Soul - 460 000, Creation - 770 000, Life - 1 150 000.</li>
+                    <li>We have also found a minor bug in the client which could have caused a connection issue for some players. Luckily it has been fixed quickly and now everything should be fine. No need to download any patch manually. Our launcher will do this for you. More about this on our <a href="http://forum.everwintermu.com/index.php?p=/discussion/92/language-and-reconnect-system-news#latest">message board</a>.</li>
+                </ul>
+                <p>We are also working on some new features for our website. They will be available soon.</p>
+                <p class="text-right"><small>2016-03-15 19:47</small></p>
+                <hr>
                 <h4>Reset Price And Exp. Rate Updates</h4>
                 <p>Dear Players, we would like to let you know that we have introduced a few changes:</p>
                 <ul>
