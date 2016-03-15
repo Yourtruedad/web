@@ -23,7 +23,7 @@ if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) 
 
 if (!empty($characterRanking)) {
 ?>
-
+<p class="text-right"><small>The ranking refreshes every <?=CACHE_BASIC_RANKING_TIME?> minutes.</small></p>
 <div class="table-responsive">
     <table class="table table-striped">
         <tr><th>#</th><th>Nick</th><th>Country</th><th>Class</th><th>Reset</th><th>Level</th><th>Master Level</th></tr>
