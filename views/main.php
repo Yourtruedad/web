@@ -4,11 +4,19 @@
 			<div class="row">
 				<h2>News & Updates</h2>
 				<hr>
-				<h4>Welcome to EverWinter MU</h4>
+				<h4>Two Days After The Launch</h4>
+				<p>The server has started successfully for all two days ago (March 12th, 2016). We are really happy that so many of you joined us. We are still adjusting some things in the configuration of the server and <strong>we have a few updates for you</strong>.</p>
+                <p>We have changed the price of the <strong>MuBot</strong> on the <strong>Passive</strong> server. <strong>Now it is totally free</strong> so your income for the time you played AFK will be much more significant.</p>
+                <p>We would also like to let you know the you can find in the game an item called <strong>Box of Tickets</strong>. If you find it and use it, you will get a free invitation to one of the in-game events. What is more, if you find i.e. a DS (Devil Square) invitation, it will work on all DS levels (DS1 to DS). So the invitation works on all event levels.</p>
+                <p>Lastly, we have also added a new feature on our website that you can see below. It’s the Event Calendar and it allows you to check really quickly when is the next i.e. BC. I hope you like it.</p>
+                <p>Please also remember that you can contact us if you have any issues on our <a href="http://forum.everwintermu.com" target="_blank">message board</a>.</p>
+				<p class="text-right"><small>2016-03-14 10:51</small></p>
+				<hr>
+				<!--<h4>Welcome to EverWinter MU</h4>
 				<p class="lead">The server launch is scheduled to March 12, 2016 7:00 p.m. (GMT+1)</p>
 				Feel free to create your EverWinter MU account now. If you have any questions or want to find out more about the server, please reach out to us on our <a href="http://forum.everwintermu.com" title="Message Board">message board</a>. See you soon!
 				<p class="text-right"><small>2016-03-02 22:19</small></p>
-				<hr>
+				<hr>-->
 			</div>
 			<div class="row">
 				<h4>Upcoming Game Events</h4>
@@ -53,6 +61,10 @@
                     </div>
                 </div>
             </div>
+			<div class="row">
+			<h5 class="text-center">Players active recently: <?=server::getActiveAccountsRecentlyCount()?></h5>
+			<hr>
+			</div>
             <div class="row">
                 <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
                 <hr>

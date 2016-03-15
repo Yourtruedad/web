@@ -112,4 +112,25 @@ class server
         }
         return $parsedEvents;
     }
+	
+	public static function getActiveAccountsRecentlyCount() {
+		$onlineCount = 0;
+		if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+            $cacheDb = new cacheDb();
+            if (true === $cacheDb->checkIfServerInformationIsCurrent('active_recently_count')) {
+                $activeAccounts = $cacheDb->getCurrentServerInformation('active_recently_count');
+                if (!empty($serverInformation)) {
+                    $onlineCount = $serverInformation['value'];
+                } else {
+                    $onlineCount = db::getActiveAccountsRecentlyCount();
+                }
+            } else {
+                $onlineCount = db::getActiveAccountsRecentlyCount();
+                $cacheDb->saveCurrentServerInformation('active_recently_count', cacheDb::CACHE_PLAYER_ONLINE_COUNT_TIME, $onlineCount);
+            }
+        } else {
+            $onlineCount = db::getActiveAccountsRecentlyCount();
+        }
+		return $onlineCount;
+	}
 }
