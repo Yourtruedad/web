@@ -4,6 +4,10 @@
             <div class="row">
                 <h2>News & Updates</h2>
                 <hr>
+                <h4>Message Board Update</h4>
+                <p>Just a quick update from the administration. We have changed the privacy settings on our forum. It means that now you will need to create your account and log in to browse the content. We have also added a new Shoutbox to let you communicate with us easily (<a href="http://forum.everwintermu.com/index.php?p=/discussion/95/new-shoutbox-on-our-forum#latest" target="_blank">read more</a>).</p>
+                <p class="text-right"><small>2016-03-16 12:48</small></p>
+                <hr>
                 <h4>Further Changes</h4>
                 <p>We hope that you like the fact that the <strong>MuBot</strong> is now available for <strong>free</strong> on the Passive sub-server. We think it was a good change and now the Passive sub-server is more popular. However, we have made a few more changes in the configuration of the server:</p>
                 <ul>
