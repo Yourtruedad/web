@@ -44,6 +44,7 @@ class character {
     public static $characterLeadershipSystemName = 'Leadership';
     public static $characterLevelUpPointSystemName = 'LevelUpPoint';
     public static $characterMoneySystemName = 'Money';
+    public static $characterMainRankingScoreSystemName = 'Score';
 
     public static $characterMaxLevel = 400;
 
@@ -64,6 +65,8 @@ class character {
     public $hideRankingCharacterDetails = false;
     
     public static $defaultCharacterCountryCode = 'PL';
+
+    public $characterMainRankingBasePoints = 100;
 
     // Get sorted $characterClassDetails array
     public static function getCharacterClassDetails() {
@@ -190,5 +193,52 @@ class character {
             return self::$defaultCharacterCountryCode;
         }
         return $code;
+    }
+
+    public function getMainCharacterRanking() {
+        $characterRanking = [];
+        if (true === db::getDbConnectionStatus() && true === rankingdb::getDbConnectionStatus()) {
+            $db = new db();
+            $characterStandings = [];
+            $characterStandings['level_ranking'] = $db->getCharacterLevelRanking();
+            $characterStandings['money_ranking'] = $db->getCharacterMoneyRanking();
+            $characterStandings['reset_ranking'] = $db->getCharacterResetRanking();
+            $characterStandings['duels_ranking'] = $db->getCharacterWonDuelsRanking();
+            $rankingdb = new rankingdb();
+            $characterStandings['devil_square_ranking'] = $rankingdb->getCharacterDevilSquareRanking();
+            $characterStandings['chaos_castle_wins_ranking'] = $rankingdb->getCharacterChaosCastleWinsRanking();
+            if (!empty($characterStandings)) {
+                foreach ($characterStandings as $rankingType => $rankingStandings) {
+                    if (!empty($rankingStandings)) {
+                        foreach ($rankingStandings as $characterKey => $character) {
+                            if (isset($characterRanking[$character['Name']])) {
+                                $characterRanking[$character['Name']] = $characterRanking[$character['Name']] + ($this->characterMainRankingBasePoints - $characterKey);
+                            } else {
+                                $characterRanking[$character['Name']] = $this->characterMainRankingBasePoints - $characterKey;
+                            }
+                        }
+                    }
+                }
+            }
+            arsort($characterRanking);
+            $characterRanking = array_slice($characterRanking, 0, 100);
+            // Get character details
+            if (!empty($characterRanking)) {
+                $characterRanking = $this->getMainCharacterRankingCharacterDetails($characterRanking);
+            }
+        }
+        return $characterRanking;
+    }
+
+    public function getMainCharacterRankingCharacterDetails(array $ranking) {
+        $newRanking = [];
+        if (!empty($ranking)) {
+            $db = new db();
+            foreach ($ranking as $character => $score) {
+                $characterDetails = $db->getCharacterDetails($character);
+                $newRanking[] = [character::$characterNameSystemName => $character, character::$characterMainRankingScoreSystemName => $score, character::$characterLevelSystemName => $characterDetails['cLevel'], character::$characterCountrySystemName => $characterDetails['Country'], character::$characterClassSystemName => $characterDetails['Class'], character::$characterResetSystemName => $characterDetails['Reset'], character::$characterMasterLevelSystemName => $characterDetails['mLevel']];
+            }
+        }
+        return $newRanking;
     }
 } 

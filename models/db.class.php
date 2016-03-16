@@ -264,7 +264,16 @@ class db
                 Money,
                 mLevel,
                 RESETS as Reset,
-                CONVERT (VARCHAR(1000), MagicList, 2) as MagicList
+                CONVERT (VARCHAR(1000), MagicList, 2) as MagicList,
+                CtlCode,
+                (
+                    SELECT 
+                        addr_info 
+                    FROM 
+                        MEMB_INFO
+                    WHERE
+                        AccountID = memb___id
+                ) as Country
             FROM
                 Character
             WHERE
@@ -782,5 +791,105 @@ class db
             }
         }
         return 0;
+    }
+
+    public function getCharacterLevelRanking($limit = 100) {
+        $sql = "
+            SELECT TOP " . $limit . "
+                Name,
+                cLevel AS Score
+            FROM 
+                Character 
+            WHERE 
+                CtlCode = 0
+            AND 
+                cLevel > 1
+            ORDER BY
+                cLevel DESC, Name ASC
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            return $results;
+        }
+        return [];
+    }
+
+    public function getCharacterMoneyRanking($limit = 100) {
+        $sql = "
+            SELECT TOP " . $limit . "
+                Name,
+                Money AS Score
+            FROM 
+                Character 
+            WHERE 
+                CtlCode = 0
+            AND
+                Money > 0
+            ORDER BY
+                Money DESC, Name ASC
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            return $results;
+        }
+        return [];
+    }
+
+    public function getCharacterResetRanking($limit = 100) {
+        $sql = "
+            SELECT TOP " . $limit . "
+                Name,
+                RESETS AS Score
+            FROM 
+                Character 
+            WHERE 
+                CtlCode = 0
+            AND
+                RESETS > 0
+            ORDER BY
+                RESETS DESC, Name ASC
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            return $results;
+        }
+        return [];
+    }
+
+    public function getCharacterWonDuelsRanking($limit = 100) {
+        $sql = "
+            SELECT TOP " . $limit . "
+                Name,
+                WinDuels AS Score
+            FROM 
+                Character 
+            WHERE 
+                CtlCode = 0
+            AND
+                WinDuels > 0
+            ORDER BY
+                WinDuels DESC, Name ASC
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            return $results;
+        }
+        return [];
     }
 }
