@@ -204,6 +204,8 @@ class character {
             $characterStandings['money_ranking'] = $db->getCharacterMoneyRanking();
             $characterStandings['reset_ranking'] = $db->getCharacterResetRanking();
             $characterStandings['duels_ranking'] = $db->getCharacterWonDuelsRanking();
+            $characterStandings['gens_vanert_ranking'] = $db->getCharacterGensRanking(1);
+            $characterStandings['gens_duprian_ranking'] = $db->getCharacterGensRanking(2);
             $rankingdb = new rankingdb();
             $characterStandings['devil_square_ranking'] = $rankingdb->getCharacterDevilSquareRanking();
             $characterStandings['chaos_castle_wins_ranking'] = $rankingdb->getCharacterChaosCastleWinsRanking();

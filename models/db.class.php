@@ -892,4 +892,39 @@ class db
         }
         return [];
     }
+
+    public function getCharacterGensRanking($fraction, $limit = 100) {
+        $sql = "
+            SELECT TOP " . $limit . "
+                Name,
+                Points AS Score
+            FROM 
+                IGC_Gens 
+            WHERE 
+                Rank > 0
+            AND
+                Influence = :fraction
+            ORDER BY
+                Rank ASC
+        ";
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $query->bindParam(':fraction', $fraction, PDO::PARAM_INT);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            foreach ($results as $key => $character) {
+                $characterDetails = $this->getCharacterDetails($character['Name']);
+                if (!empty($characterDetails)) {
+                    if ($characterDetails['CtlCode'] !== '0') {
+                        unset($results[$key]);
+                    }
+                }
+            }
+            ksort($results);
+            return $results;
+        }
+        return [];
+    }
 }

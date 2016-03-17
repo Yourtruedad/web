@@ -406,4 +406,151 @@ class cacheDb
         }
         return [];
     }
+
+    public function getCurrentScoreRankingDetails() {
+        $sql = '
+            SELECT
+                `id`,
+                `valid_till`,
+                `created_on`
+            FROM
+                `score_rankings`
+            WHERE
+                `valid_till` > NOW()
+            ORDER BY 
+                `valid_till` DESC
+            LIMIT 1
+        ';
+
+        $query = $this->pdo->query($sql);
+        $results = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($results)) {
+            return $results;
+        }
+        return [];
+    }
+
+    public function checkIfScoreRankingIsCurrent() {
+        $currentScoreRanking = $this->getCurrentScoreRankingDetails();
+        if (!empty($currentScoreRanking)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function saveNewScoreRanking() {
+        $sql = '
+            INSERT INTO
+                `score_rankings`
+                (
+                    `valid_till`
+                )
+            VALUES
+                (
+                    NOW() + INTERVAL ' . CACHE_MAIN_RANING_TIME . ' MINUTE
+                )
+        ';
+        $query = $this->pdo->prepare($sql);
+        //$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $result = $query->execute();
+        return $result;
+    }
+
+    public function saveScoreRankingStandings(array $ranking) {
+        if (!empty($ranking)) {
+            $currentScoreRankingDetails = $this->getCurrentScoreRankingDetails();
+            if (empty($currentScoreRankingDetails)) {
+                $newScoreRanking = $this->saveNewScoreRanking();
+                if (true === $newScoreRanking) {
+                    $currentScoreRankingDetails = $this->getCurrentScoreRankingDetails();
+                }
+            }
+            if (!empty($currentScoreRankingDetails)) {
+                try {
+                    $sql = '
+                        INSERT INTO 
+                            `score_ranking_standings` 
+                            (
+                                `score_rankings_id`, 
+                                `standing`, 
+                                `name`,
+                                `country`, 
+                                `class`,
+                                `score`,
+                                `reset`, 
+                                `level`, 
+                                `master_level`
+                            )
+                        VALUES 
+                            (
+                                :scoreRankingsId,
+                                :standing,
+                                :name,
+                                :country,
+                                :class,
+                                :score,
+                                :reset,
+                                :level,
+                                :masterLevel
+                            )
+                    ';
+
+                    $query = $this->pdo->prepare($sql);
+                    foreach ($ranking as $key => $character) {
+                        $standing = $key + 1;
+                        $query->bindParam(':scoreRankingsId', $currentScoreRankingDetails['id'], PDO::PARAM_INT);
+                        $query->bindParam(':standing', $standing, PDO::PARAM_INT);
+                        $query->bindParam(':name', $character['Name'], PDO::PARAM_STR);
+                        $query->bindParam(':country', $character['Country'], PDO::PARAM_STR);
+                        $query->bindParam(':class', $character['Class'], PDO::PARAM_INT);
+                        $query->bindParam(':score', $character['Score'], PDO::PARAM_INT);
+                        $query->bindParam(':reset', $character['Reset'], PDO::PARAM_INT);
+                        $query->bindParam(':level', $character['cLevel'], PDO::PARAM_INT);
+                        $query->bindParam(':masterLevel', $character['mLevel'], PDO::PARAM_INT);
+                        $result = $query->execute();
+                    }
+                } catch (PDOException $e) {
+                    return false;
+                } 
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getCurrentScoreRanking($limit = 100) {
+        $currentScoreRankingDetails = $this->getCurrentScoreRankingDetails();
+        if (!empty($currentScoreRankingDetails)) {
+            $sql = '
+                SELECT
+                    `id`,
+                    `score_rankings_id`,
+                    `standing`,
+                    `name` AS `Name`,
+                    `country` AS `Country`, 
+                    `class` AS `Class`, 
+                    `score` AS `Score`,
+                    `reset` AS `Reset`, 
+                    `level` AS `cLevel`, 
+                    `master_level` AS `mLevel`,
+                    `guild_name` AS `GuildName`
+                FROM 
+                    `score_ranking_standings`
+                WHERE
+                    `score_rankings_id` = :id
+                ORDER BY 
+                    `standing` ASC
+                LIMIT ' . $limit . '
+            ';
+            $query = $this->pdo->prepare($sql);
+            $query->bindParam(':id', $currentScoreRankingDetails['id'], PDO::PARAM_INT);
+            $query->execute();
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($results)) {
+                return $results;
+            }
+        }
+        return [];
+    }
 }

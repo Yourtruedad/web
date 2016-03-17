@@ -1,26 +1,26 @@
-<h1>EWM Score Ranking</h1>
-<p class="lead">See below our unique character ranking.</p>
+<h1>Score Ranking</h1>
+<p class="lead">See below our unique character ranking</p>
+<p>We measure several aspects of the game separately. In order to be number one, you need to make your character stronger but also do events, win duels and more. We measure your level, reset, amount of Zen, duels, Gens rank, Devil Square points, Blood Castle points and Chaos Castle wins.</p>
 
 <?php
 
 $character = new character();
 $character->hideRankingCharacterDetails = true;
 
-/*if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
     $cacheDb = new cacheDb();
-    if (true === $cacheDb->checkIfBasicRankingIsCurrent()) {
-        $characterRanking = $cacheDb->getCurrentBasicRanking();
+    if (true === $cacheDb->checkIfScoreRankingIsCurrent()) {
+        $characterRanking = $cacheDb->getCurrentScoreRanking();
         if (empty($characterRanking)) {
-            $characterRanking = db::getCharacterRanking();
+            $characterRanking = $character->getMainCharacterRanking();
         }
     } else {
-        $characterRanking = db::getCharacterRanking();
-        $cacheDb->saveBasicRankingStandings($characterRanking);
+        $characterRanking = $character->getMainCharacterRanking();
+        $cacheDb->saveScoreRankingStandings($characterRanking);
     }
 } else {
-    $characterRanking = db::getCharacterRanking();
-}*/
-$characterRanking = $character->getMainCharacterRanking();
+    $characterRanking = $character->getMainCharacterRanking();
+}
 
 if (!empty($characterRanking)) {
 ?>
