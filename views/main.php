@@ -4,6 +4,10 @@
             <div class="row">
                 <h2>News & Updates</h2>
                 <hr>
+                <h4>New Score Ranking</h4>
+                <p>Dear Players, we have introduced a new character ranking on our website. It is the Score Ranking which you can see if you <a href="?module=score_ranking">click here</a>.  The new ranking will show who is the best player because there are several elements of the game that it measures (not just level and reset). In order to be the best, you need to do events, win duels, increase your Gens rank and also gather money. The Score Ranking refreshes every 24h. Check now who is the best so far and try to be number 1. If you have any questions regarding how this works, you can reach out to us on our message board.</p>
+                <p class="text-right"><small>2016-03-18 18:06</small></p>
+                <hr>
                 <h4>Message Board Update</h4>
                 <p>Just a quick update from the administration. We have changed the privacy settings on our forum. It means that now you will need to create your account and log in to browse the content. We have also added a new Shoutbox to let you communicate with us easily (<a href="http://forum.everwintermu.com/index.php?p=/discussion/95/new-shoutbox-on-our-forum#latest" target="_blank">read more</a>).</p>
                 <p class="text-right"><small>2016-03-16 12:48</small></p>
@@ -26,14 +30,6 @@
                 </ul>
                 <p>If you have any suggestions, do not hesitate to contact us.</p>
                 <p class="text-right"><small>2016-03-14 19:36</small></p>
-                <hr>
-                <h4>Two Days After The Launch</h4>
-                <p>The server has started successfully for all two days ago (March 12th, 2016). We are really happy that so many of you joined us. We are still adjusting some things in the configuration of the server and <strong>we have a few updates for you</strong>.</p>
-                <p>We have changed the price of the <strong>MuBot</strong> on the <strong>Passive</strong> server. <strong>Now it is totally free</strong> so your income for the time you played AFK will be much more significant.</p>
-                <p>We would also like to let you know the you can find in the game an item called <strong>Box of Tickets</strong>. If you find it and use it, you will get a free invitation to one of the in-game events. What is more, if you find i.e. a DS (Devil Square) invitation, it will work on all DS levels (DS1 to DS). So the invitation works on all event levels.</p>
-                <p>Lastly, we have also added a new feature on our website that you can see below. It’s the Event Calendar and it allows you to check really quickly when is the next i.e. BC. I hope you like it.</p>
-                <p>Please also remember that you can contact us if you have any issues on our <a href="http://forum.everwintermu.com" target="_blank">message board</a>.</p>
-                <p class="text-right"><small>2016-03-14 10:51</small></p>
                 <hr>
             </div>
             <div class="row">
@@ -95,7 +91,7 @@
                         <?php 
                             $character = new character();
                             $character->hideRankingCharacterDetails = true;
-                            $shortRanking = server::getTop5CharacterRanking(); 
+                            $shortRanking = server::getCharacterRanking(5); 
                             if (!empty($shortRanking)) {
                                 foreach ($shortRanking as $key => $characterDetails) {
                                     echo '<tr>

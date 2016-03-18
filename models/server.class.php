@@ -23,15 +23,20 @@ class server
         'Santa Claus' => ['type' => 'specific', 'details' => ['day' => 'everyday', 'times' => ['01:20', '07:20', '13:20', '19:20']]],
         //'EXAMPLE RECURRING EVENT' => ['type' => 'recurring', 'details' => ['time_unit' => 'hour', 'value' => 4]],
     ];
+
+    public static $serverLevelRankingTopPlayersLimit = 100;
+
+    public static $serverScoreRankingTopPlayersLimit = 100;
     
-    public static function getTop5CharacterRanking() {
-        $characterRanking = '';
+    public static function getCharacterRanking($top = 100) {
+        $characterRanking = [];
         if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
             $cacheDb = new cacheDb();
             if (true === $cacheDb->checkIfBasicRankingIsCurrent()) {
-                $characterRanking = $cacheDb->getCurrentBasicRanking(5);
+                $characterRanking = $cacheDb->getCurrentBasicRanking($top);
                 if (empty($characterRanking)) {
                     $characterRanking = db::getCharacterRanking();
+
                 }
             } else {
                 $characterRanking = db::getCharacterRanking();
@@ -40,13 +45,15 @@ class server
         } else {
             $characterRanking = db::getCharacterRanking();
         }
-
-        return array_slice($characterRanking, 0, 5);
+        if (!empty($characterRanking)) {
+            $characterRanking = array_slice($characterRanking, 0, $top);
+        }
+        return $characterRanking;
     }
     
     public function getUpcomingEvents($daysNumber = '2') {
         $events = [];
-        foreach ($this->eventDates as $eventName => $eventDate) {
+        foreach ($this->eventDates  as $eventName => $eventDate) {
             if ($this->eventTypeRecurringName === $eventDate['type']) {
                 // THIS IF IS NOT USED - INACTIVE
                 $startingDate = common::currentDate('Y-m-d') . ' 00:00:00';
@@ -132,5 +139,36 @@ class server
             $onlineCount = db::getActiveAccountsRecentlyCount();
         }
         return $onlineCount;
+    }
+
+    public static function getCharacterScoreRanking($top = 100) {
+        $characterRanking = [];
+        if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+            $cacheDb = new cacheDb();
+            if (true === $cacheDb->checkIfScoreRankingIsCurrent()) {
+                $characterRanking = $cacheDb->getCurrentScoreRanking();
+                if (empty($characterRanking)) {
+                    $characterRanking = $character->getMainCharacterRanking();
+                }
+            } else {
+                $characterRanking = $character->getMainCharacterRanking();
+                $cacheDb->saveScoreRankingStandings($characterRanking);
+            }
+        } else {
+            $characterRanking = $character->getMainCharacterRanking();
+        }
+        if (!empty($characterRanking)) {
+            $characterRanking = array_slice($characterRanking, 0, $top);
+        }
+        return $characterRanking;
+    }
+
+    public static function getScoreRankingTimeSinceLastUpdate() {
+        if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+            $cacheDb = new cacheDb();
+            $currentRankingDetails = $cacheDb->getCurrentScoreRankingDetails();
+            
+            return common::calculateTimeDifference($currentRankingDetails['created_on'], $currentRankingDetails['valid_till']);
+        }
     }
 }

@@ -6,20 +6,7 @@
 $character = new character();
 $character->hideRankingCharacterDetails = true;
 
-if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
-    $cacheDb = new cacheDb();
-    if (true === $cacheDb->checkIfBasicRankingIsCurrent()) {
-        $characterRanking = $cacheDb->getCurrentBasicRanking();
-        if (empty($characterRanking)) {
-            $characterRanking = db::getCharacterRanking();
-        }
-    } else {
-        $characterRanking = db::getCharacterRanking();
-        $cacheDb->saveBasicRankingStandings($characterRanking);
-    }
-} else {
-    $characterRanking = db::getCharacterRanking();
-}
+$characterRanking = server::getCharacterRanking(server::$serverLevelRankingTopPlayersLimit);
 
 if (!empty($characterRanking)) {
 ?>

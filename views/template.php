@@ -43,14 +43,20 @@
                         <li <?php echo ('main' === $module) ? 'class="active"' : '' ?>><a href="index.php"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
                         <li <?php echo ('register' === $module) ? 'class="active"' : '' ?>><a href="?module=register">Sign Up</a></li>
                         <li <?php echo ('download' === $module) ? 'class="active"' : '' ?>><a href="?module=download">Download</a></li>
-                        <li <?php echo ('ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=ranking">Ranking</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rankings <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li <?php echo ('score_ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=score_ranking">Score Ranking</a></li>
+                                <li <?php echo ('ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=ranking">Level Ranking</a></li>
+                            </ul>
+                        </li>
                         <!--<li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>-->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="?module=server_information">Server Information</a></li>
+                                <li <?php echo ('server_information' === $module) ? 'class="active"' : '' ?>><a href="?module=server_information">Server Information</a></li>
                             </ul>
                         </li>
                     </ul>

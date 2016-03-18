@@ -1,26 +1,13 @@
 <h1>Score Ranking</h1>
 <p class="lead">See below our unique character ranking</p>
-<p>We measure several aspects of the game separately. In order to be number one, you need to make your character stronger but also do events, win duels and more. We measure your level, reset, amount of Zen, duels, Gens rank, Devil Square points, Blood Castle points and Chaos Castle wins.</p>
+<p>We measure several aspects of the game separately. In order to be number one, you need to make your character stronger but also do events, win duels and more. We measure your level, reset, amount of Zen, duels, Gens rank, Devil Square points<span style="display:none;">, Blood Castle points</span> and Chaos Castle wins.</p>
 
 <?php
 
 $character = new character();
 $character->hideRankingCharacterDetails = true;
 
-if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
-    $cacheDb = new cacheDb();
-    if (true === $cacheDb->checkIfScoreRankingIsCurrent()) {
-        $characterRanking = $cacheDb->getCurrentScoreRanking();
-        if (empty($characterRanking)) {
-            $characterRanking = $character->getMainCharacterRanking();
-        }
-    } else {
-        $characterRanking = $character->getMainCharacterRanking();
-        $cacheDb->saveScoreRankingStandings($characterRanking);
-    }
-} else {
-    $characterRanking = $character->getMainCharacterRanking();
-}
+$characterRanking = server::getCharacterScoreRanking(server::$serverScoreRankingTopPlayersLimit);
 
 if (!empty($characterRanking)) {
 ?>
