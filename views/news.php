@@ -1,5 +1,9 @@
 <h1>News & Updates Archive</h1>
 <br><br>
+<h4>New Score Ranking</h4>
+<p>Dear Players, we have introduced a new character ranking on our website. It is the Score Ranking which you can see if you <a href="?module=score_ranking">click here</a>.  The new ranking will show who is the best player because there are several elements of the game that it measures (not just level and reset). In order to be the best, you need to do events, win duels, increase your Gens rank and also gather money. The Score Ranking refreshes every 24h. Check now who is the best so far and try to be number 1. If you have any questions regarding how this works, you can reach out to us on our message board.</p>
+<p class="text-right"><small>2016-03-18 18:06</small></p>
+<hr>
 <h4>Message Board Update</h4>
 <p>Just a quick update from the administration. We have changed the privacy settings on our forum. It means that now you will need to create your account and log in to browse the content. We have also added a new Shoutbox to let you communicate with us easily (<a href="http://forum.everwintermu.com/index.php?p=/discussion/95/new-shoutbox-on-our-forum#latest" target="_blank">read more</a>).</p>
 <p class="text-right"><small>2016-03-16 12:48</small></p>
