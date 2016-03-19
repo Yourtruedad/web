@@ -5,7 +5,8 @@
                 <h2>News & Updates</h2>
                 <hr>
                 <h4>New Score Ranking</h4>
-                <p>Dear Players, we have introduced a new character ranking on our website. It is the Score Ranking which you can see if you <a href="?module=score_ranking">click here</a>.  The new ranking will show who is the best player because there are several elements of the game that it measures (not just level and reset). In order to be the best, you need to do events, win duels, increase your Gens rank and also gather money. The Score Ranking refreshes every 24h. Check now who is the best so far and try to be number 1. If you have any questions regarding how this works, you can reach out to us on our message board.</p>
+                <p>Dear Players, we have introduced a new character ranking on our website. It is the <strong>Score Ranking</strong> which you can see if you <a href="?module=score_ranking">click here</a>. The new ranking will show who is the best player because there are several elements of the game that it measures (not just level and reset). In order to be the best, <u>you need to do events, win duels, increase your Gens rank and also gather money</u>.</p>
+				<p>The Score Ranking refreshes every 24h. Check now who is the best so far and try to be number 1. If you have any questions regarding how this works, you can reach out to us on our message board.</p>
                 <p class="text-right"><small>2016-03-18 18:06</small></p>
                 <hr>
                 <h4>Message Board Update</h4>
@@ -20,19 +21,10 @@
                 </ul>
                 <p>We are also working on some new features for our website. They will be available soon.</p>
                 <p class="text-right"><small>2016-03-15 19:47</small></p>
-                <hr>
-                <h4>Reset Price And Exp. Rate Updates</h4>
-                <p>Dear Players, we would like to let you know that we have introduced a few changes:</p>
-                <ul>
-                    <li>The <strong>exp. rate</strong> while playing in party has been slightly <strong>increased</strong>.</li>
-                    <li>The new price of the <strong>character reset</strong> is now 30,000,000 Zen.</li>
-                    <li>We have also slightly lowered the HP of Snakes.</li>
-                </ul>
-                <p>If you have any suggestions, do not hesitate to contact us.</p>
-                <p class="text-right"><small>2016-03-14 19:36</small></p>
-                <hr>
+                <small><em><a href="?module=news" title="News Archive">Click here to read the news archive</a></em></small>
             </div>
             <div class="row">
+			    <hr>
                 <h4>Upcoming Game Events</h4>
                 <div id="eventList">
                     <table class="table table-bordered">
@@ -79,14 +71,19 @@
             <h5 class="text-center">Players active recently: <?=server::getActiveAccountsRecentlyCount()?></h5>
             <hr>
             </div>
+			<div class="row">
+			    <?php
+				$playerOfTheDay = $server->getPlayerOfTheDay();
+				if (!empty($playerOfTheDay)) {
+			        echo '<h3>Player of the Day: ' . $playerOfTheDay . '</h3><h5><small>Well done! It is based on the <a href="?module=score_ranking" title="Score Ranking">Score Ranking</a></small></h5>';
+				}
+				?>
+				<hr>
+			</div>
             <div class="row">
-                <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
-                <hr>
-            </div>
-            <div class="row">
-                <h4>Top 5 Players</h4>
+                <h4>Top 5 Players <small>Reset and Level</small></h4>
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-condensed">
                         <tr><th>#</th><th>Nick</th><th>Class</th><th>Reset</th><th>Level</th></tr>
                         <?php 
                             $character = new character();
@@ -108,6 +105,10 @@
                         ?>
                     </table>
                 </div>
+            </div>
+			<div class="row">
+                <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
+                <hr>
             </div>
             <div class="row">
                 <h4>Vote For Us</h4>

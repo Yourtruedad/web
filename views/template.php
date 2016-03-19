@@ -57,6 +57,7 @@
                                 <li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li <?php echo ('server_information' === $module) ? 'class="active"' : '' ?>><a href="?module=server_information">Server Information</a></li>
+								<li <?php echo ('news' === $module) ? 'class="active"' : '' ?>><a href="?module=news">News Archive</a></li>
                             </ul>
                         </li>
                     </ul>

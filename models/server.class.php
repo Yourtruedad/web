@@ -171,4 +171,12 @@ class server
             return common::calculateTimeDifference($currentRankingDetails['created_on'], $currentRankingDetails['valid_till']);
         }
     }
+	
+	public function getPlayerOfTheDay() {
+		$playerOfTheDay = server::getCharacterScoreRanking(1);
+		if (!empty($playerOfTheDay)) {
+			return current($playerOfTheDay)['Name'];
+		}
+		return '';
+	}
 }
