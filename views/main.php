@@ -3,7 +3,11 @@
         <div class="col-md-7">
             <div class="row">
                 <h2>News & Updates</h2>
-                <hr>
+				<hr>
+				<h4>The /offtrade command</h4>
+				<p>A quick update - if you want to you the /offtrade command, you will need to go to Noria on the Passive subserver.</p>
+                <p class="text-right"><small>2016-03-19 15:43</small></p>
+				<hr>
                 <h4>New Score Ranking</h4>
                 <p>Dear Players, we have introduced a new character ranking on our website. It is the <strong>Score Ranking</strong> which you can see if you <a href="?module=score_ranking">click here</a>. The new ranking will show who is the best player because there are several elements of the game that it measures (not just level and reset). In order to be the best, <u>you need to do events, win duels, increase your Gens rank and also gather money</u>.</p>
 				<p>The Score Ranking refreshes every 24h. Check now who is the best so far and try to be number 1. If you have any questions regarding how this works, you can reach out to us on our message board.</p>
