@@ -143,6 +143,7 @@ class server
 
     public static function getCharacterScoreRanking($top = 100) {
         $characterRanking = [];
+		$character = new character();
         if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
             $cacheDb = new cacheDb();
             if (true === $cacheDb->checkIfScoreRankingIsCurrent()) {
