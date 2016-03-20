@@ -805,7 +805,7 @@ class db
             AND 
                 cLevel > 1
             ORDER BY
-                cLevel DESC, MDate ASC, Name ASC
+                cLevel DESC, Experience DESC, MDate ASC, Name ASC
         ";
         $query = $this->pdo->prepare($sql);
         $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
