@@ -805,7 +805,7 @@ class db
             AND 
                 cLevel > 1
             ORDER BY
-                cLevel DESC, Name ASC
+                cLevel DESC, MDate ASC, Name ASC
         ";
         $query = $this->pdo->prepare($sql);
         $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -830,7 +830,7 @@ class db
             AND
                 Money > 0
             ORDER BY
-                Money DESC, Name ASC
+                Money DESC, MDate ASC, Name ASC
         ";
         $query = $this->pdo->prepare($sql);
         $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -855,7 +855,7 @@ class db
             AND
                 RESETS > 0
             ORDER BY
-                RESETS DESC, Name ASC
+                RESETS DESC, cLevel DESC, MDate ASC, Name ASC
         ";
         $query = $this->pdo->prepare($sql);
         $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -880,7 +880,7 @@ class db
             AND
                 WinDuels > 0
             ORDER BY
-                WinDuels DESC, Name ASC
+                WinDuels DESC, MDate ASC, Name ASC
         ";
         $query = $this->pdo->prepare($sql);
         $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
