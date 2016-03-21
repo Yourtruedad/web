@@ -1,5 +1,10 @@
 <h1>News & Updates Archive</h1>
 <br><br>
+<h4>The First Castle Siege</h4>
+<p>The very first CS on our server has been completed. The <strong>TiTaN</strong> guild lead by <strong>RasAlGhul</strong> this time defeated the <strong>True</strong> guild lead by <strong>The0ne</strong>. Congratulations to TiTaNs!. We hope that the next week the siege will be even more exciting.</p>
+<p>Secondly, we would also like to let you know that two first players managed to reach the maximum level and reset their characters - <strong>RasAlGhul</strong> and <strong>KlauS</strong> - well done guys!</p>
+<p>Lastly, more and more players join EverWinter MU. We are really happy that it is so. Everyone is welcome.</p> 
+<p class="text-right"><small>2016-03-20 20:33</small></p>
 <h4>The /offtrade command</h4>
 <p>A quick update - if you want to you the /offtrade command, you will need to go to Noria on the Passive subserver.</p>
 <p class="text-right"><small>2016-03-19 15:43</small></p>

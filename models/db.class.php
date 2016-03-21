@@ -166,7 +166,7 @@ class db
                     FROM 
                         GuildMember
                     WHERE 
-                        Name = Name
+                        GuildMember.Name = Character.Name
                 ) as GuildName
             FROM
                 Character
@@ -926,5 +926,26 @@ class db
             return $results;
         }
         return [];
+    }
+	
+	public static function getCastleOwnerGuildName() {
+		if (true === db::getDbConnectionStatus()) {
+			$sql = '
+				SELECT TOP 1
+					OWNER_GUILD
+				FROM 
+					MuCastle_DATA
+			';
+			$db = new db();
+			$query = $db->pdo->prepare($sql);
+			$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			$query->execute();
+			$result = $query->fetch(PDO::FETCH_ASSOC);
+
+			if (!empty($result)) {
+				return $result['OWNER_GUILD'];
+			}
+		}
+		return '';
     }
 }

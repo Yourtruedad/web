@@ -18,7 +18,7 @@ if (!empty($characterRanking)) {
         foreach ($characterRanking as $rank => $characterDetails) {
             echo '<tr>
                     <td>' . ($rank + 1) . '</td>
-                    <td>' . $characterDetails[character::$characterNameSystemName] . ' ' , (1 == $characterDetails[character::$characterStatusOnlineSystemName]) ? '<span class="glyphicon glyphicon-flash" title="Player Connected" alt="Player Connected"></span>' : '' , '</td>
+                    <td>' . $characterDetails[character::$characterNameSystemName] . ' ' , (1 == $characterDetails[character::$characterStatusOnlineSystemName]) ? '<span class="glyphicon glyphicon-flash" title="Player Connected" alt="Player Connected"></span>' : '' , ' ' , (!empty($characterDetails['GuildName'])) ? '[' . $characterDetails['GuildName'] . ']' : '' , '</td>
                     <td><span class="bfh-countries" data-country="' . character::returnDefaultCharacterCountryCode($characterDetails[character::$characterCountrySystemName]) . '" data-flags="true"></span></td>
                     <td>' . character::getCharacterClassName($characterDetails[character::$characterClassSystemName]) . '</td>
                     <td>' . $character->hideRankingCharacterDetail($characterDetails[character::$characterResetSystemName]) . '</td>

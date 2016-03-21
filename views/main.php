@@ -4,6 +4,12 @@
             <div class="row">
                 <h2>News & Updates</h2>
 				<hr>
+				<h4>The First Castle Siege</h4>
+				<p>The very first CS on our server has been completed. The <strong>TiTaN</strong> guild lead by <strong>RasAlGhul</strong> this time defeated the <strong>True</strong> guild lead by <strong>The0ne</strong>. Congratulations to TiTaNs!. We hope that the next week the siege will be even more exciting.</p>
+				<p>Secondly, we would also like to let you know that two first players managed to reach the maximum level and reset their characters - <strong>RasAlGhul</strong> and <strong>KlauS</strong> - well done guys!</p>
+				<p>Lastly, more and more players join EverWinter MU. We are really happy that it is so. Everyone is welcome.</p> 
+				<p class="text-right"><small>2016-03-20 20:33</small></p>
+				<hr>
 				<h4>The /offtrade command</h4>
 				<p>A quick update - if you want to you the /offtrade command, you will need to go to Noria on the Passive subserver.</p>
                 <p class="text-right"><small>2016-03-19 15:43</small></p>
@@ -16,15 +22,6 @@
                 <h4>Message Board Update</h4>
                 <p>Just a quick update from the administration. We have changed the privacy settings on our forum. It means that now you will need to create your account and log in to browse the content. We have also added a new Shoutbox to let you communicate with us easily (<a href="http://forum.everwintermu.com/index.php?p=/discussion/95/new-shoutbox-on-our-forum#latest" target="_blank">read more</a>).</p>
                 <p class="text-right"><small>2016-03-16 12:48</small></p>
-                <hr>
-                <h4>Further Changes</h4>
-                <p>We hope that you like the fact that the <strong>MuBot</strong> is now available for <strong>free</strong> on the Passive sub-server. We think it was a good change and now the Passive sub-server is more popular. However, we have made a few more changes in the configuration of the server:</p>
-                <ul>
-                    <li>We have <strong>increased</strong> the selling price of jewels in in-game shops. The new prices are now as follows: Bless - 690 000, Soul - 460 000, Creation - 770 000, Life - 1 150 000.</li>
-                    <li>We have also found a minor bug in the client which could have caused a connection issue for some players. Luckily it has been fixed quickly and now everything should be fine. No need to download any patch manually. Our launcher will do this for you. More about this on our <a href="http://forum.everwintermu.com/index.php?p=/discussion/92/language-and-reconnect-system-news#latest">message board</a>.</li>
-                </ul>
-                <p>We are also working on some new features for our website. They will be available soon.</p>
-                <p class="text-right"><small>2016-03-15 19:47</small></p>
                 <small><em><a href="?module=news" title="News Archive">Click here to read the news archive</a></em></small>
             </div>
             <div class="row">
@@ -73,13 +70,26 @@
             </div>
             <div class="row">
             <h5 class="text-center">Players active recently: <?=server::getActiveAccountsRecentlyCount()?></h5>
-            <hr>
+			<hr>
+            </div>
+			<div class="row">
+                <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
+				<hr>
             </div>
 			<div class="row">
 			    <?php
 				$playerOfTheDay = $server->getPlayerOfTheDay();
 				if (!empty($playerOfTheDay)) {
 			        echo '<h3>Player of the Day: ' . $playerOfTheDay . '</h3><h5><small>Well done! It is based on the <a href="?module=score_ranking" title="Score Ranking">Score Ranking</a></small></h5>';
+				}
+				?>
+				<hr>
+			</div>
+			<div class="row">
+			    <?php
+				$castleOwnerGuildName = db::getCastleOwnerGuildName();
+				if (!empty($castleOwnerGuildName)) {
+					echo '<h3>Castle Owner Guild: ' . $castleOwnerGuildName . '</h3><h5><small>Congratulations! Castle Siege happens every Saturday</small></h5>';
 				}
 				?>
 				<hr>
@@ -109,10 +119,6 @@
                         ?>
                     </table>
                 </div>
-            </div>
-			<div class="row">
-                <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
-                <hr>
             </div>
             <div class="row">
                 <h4>Vote For Us</h4>
