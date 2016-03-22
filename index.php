@@ -29,7 +29,7 @@ $action = '';
 
 if (isset($_GET['module']) && !empty($_GET['module'])) {
     $getModule = $common->secureStringVariable($_GET['module']);
-    if (in_array($getModule, $systemModules)) {
+    if (in_array($getModule, $systemModules) && true === file_exists('views/' . $getModule . MODULE_FILE_EXTENSION)) {
         $module = $getModule;
     }
     if (isset($_GET['action']) && !empty($_GET['action'])) {
