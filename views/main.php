@@ -1,30 +1,30 @@
 <div> 
     <div class="row">
         <div class="col-md-7">
+		    <div class="row">
+			    <div class="alert alert-info"><span class="glyphicon glyphicon-exclamation-sign"></span> <strong>EverWinter MU Starts on April 1st, 2016 7 p.m. (GMT+1).</strong></div>
+			</div>
             <div class="row">
                 <h2>News & Updates</h2>
-				<hr>
-				<h4>Let's try it again.</h4>
-				<p>Dear Players, we, administrator, unfortunately have made several mistakes with the server configuration. The majority of them were insignificant but we managed to adjust them in just a few minutes so it means you probably did not even notice them. Nonetheless, everything should have been perfect because we are not new at this. Every mistake that we made caused players to leave the server. Probably the biggest one was at the very beginning which was about disabling the possibility to use the multi client and the Elf Buffer at level 30.</p> 
-
-<p>After some time we managed to convince you, new players, that you can trust us because we are trying to make the server the best we possibility can. The number of active players was getting higher to reach 100 online on a very difficult server. We though that everything is going well. The server was online for 8 days without any outages. We managed to avoid DDoS attacks and get rid of cheaters from the server. We did not want to brag about it because it was our job.</p> 
-
-<p>However, right now the only thing that we can do is to apologise. We have made one mistake which resulted in the issue with our database and we lost some data from it. The backup that we could make is corrupted and we are unable to recover anything from it. We have found the issue, fixed it and now everything is fine.</p> 
-
-<p>We believe that the settings on our server were unique enough that you enjoyed the time you spent with us. We hope that you have found what you were looking for. Restarting the game from the backup could result in loosing many players. Therefore we decided to wipe the database and start fresh. The settings will stay the same.</p> 
-
-<p>All players who bought wCoins will have them back (all of them) on the next edition of the server.</p> 
-
-<p>The truth is that it is up to you whether the server will continue. Will you give us the second chance? Think about this and decide. If you still would like to stay with us, please spread the word that we are going come back. We believe that with the fresh start we can get even more players to make the game even more entertaining. We will come back better and stronger. We know this!</p>
-
-<p>Everyone is invited to join the server which will launch again on <strong>Friday, April 1st, 2016</strong>. You will be able to create your new account on March 29th. </p>
-
-<p>All players who bought wCoins, please contact us at <strong>admins@everwintermu.com</strong> to let us know how many wCoins you had and on which account they should be added. You will need only the transaction ID and your new login name.</p> 
+                <hr>
+                <h4>Account Registration Is Open</h4>
+                <p>You can <a href="?module=register" title="Sign Up">create your EverWinter MU account</a> now. You will be able to use it when the server starts.</p>
+                <p class="text-right"><small>2016-03-23 21:06</small></p>
+                <hr>
+                <h4>Let's try it again.</h4>
+                <p>Dear Players, we, administrator, unfortunately have made several mistakes with the server configuration. The majority of them were insignificant but we managed to adjust them in just a few minutes so it means you probably did not even notice them. Nonetheless, everything should have been perfect because we are not new at this. Every mistake that we made caused players to leave the server. Probably the biggest one was at the very beginning which was about disabling the possibility to use the multi client and the Elf Buffer at level 30.</p> 
+                <p>After some time we managed to convince you, new players, that you can trust us because we are trying to make the server the best we possibility can. The number of active players was getting higher to reach 100 online on a very difficult server. We though that everything is going well. The server was online for 8 days without any outages. We managed to avoid DDoS attacks and get rid of cheaters from the server. We did not want to brag about it because it was our job.</p> 
+                <p>However, right now the only thing that we can do is to apologise. We have made one mistake which resulted in the issue with our database and we lost some data from it. The backup that we could make is corrupted and we are unable to recover anything from it. We have found the issue, fixed it and now everything is fine.</p> 
+                <p>We believe that the settings on our server were unique enough that you enjoyed the time you spent with us. We hope that you have found what you were looking for. Restarting the game from the backup could result in loosing many players. Therefore we decided to wipe the database and start fresh. The settings will stay the same.</p> 
+                <p>All players who bought wCoins will have them back (all of them) on the next edition of the server.</p> 
+                <p>The truth is that it is up to you whether the server will continue. Will you give us the second chance? Think about this and decide. If you still would like to stay with us, please spread the word that we are going come back. We believe that with the fresh start we can get even more players to make the game even more entertaining. We will come back better and stronger. We know this!</p>
+                <p>Everyone is invited to join the server which will launch again on <strong>Friday, April 1st, 2016</strong>. You will be able to create your new account on March 29th. </p>
+                <p>All players who bought wCoins, please contact us at <strong>admins@everwintermu.com</strong> to let us know how many wCoins you had and on which account they should be added. You will need only the transaction ID and your new login name.</p> 
                 <p class="text-right"><small>2016-03-21 23:30</small></p>
                 <small><em><a href="?module=news" title="News Archive">Click here to read the news archive</a></em></small>
             </div>
             <div class="row">
-			    <hr>
+                <hr>
                 <h4>Upcoming Game Events</h4>
                 <div id="eventList">
                     <table class="table table-bordered">
@@ -69,30 +69,28 @@
             </div>
             <div class="row">
             <h5 class="text-center">Players active recently: <?=server::getActiveAccountsRecentlyCount()?></h5>
-			<hr>
+            <hr>
             </div>
-			<div class="row">
+            <div class="row">
                 <a href="?module=account&action=wcoins" title="Get WCoins"><img src="views/img/get-wcoins.png" class="img-responsive margin-center" alt="Get WCoins"></a>
-				<hr>
+                <hr>
             </div>
-			<div class="row">
-			    <?php
-				$playerOfTheDay = $server->getPlayerOfTheDay();
-				if (!empty($playerOfTheDay)) {
-			        echo '<h3>Player of the Day: ' . $playerOfTheDay . '</h3><h5><small>Well done! It is based on the <a href="?module=score_ranking" title="Score Ranking">Score Ranking</a></small></h5>';
-				}
-				?>
-				<hr>
-			</div>
-			<div class="row">
-			    <?php
-				$castleOwnerGuildName = db::getCastleOwnerGuildName();
-				if (!empty($castleOwnerGuildName)) {
-					echo '<h3>Castle Owner Guild: ' . $castleOwnerGuildName . '</h3><h5><small>Congratulations! Castle Siege happens every Saturday</small></h5>';
-				}
-				?>
-				<hr>
-			</div>
+            <div class="row">
+                <?php
+                $playerOfTheDay = $server->getPlayerOfTheDay();
+                if (!empty($playerOfTheDay)) {
+                    echo '<h3>Player of the Day: ' . $playerOfTheDay . '</h3><h5><small>Well done! It is based on the <a href="?module=score_ranking" title="Score Ranking">Score Ranking</a></small></h5><hr>';
+                }
+                ?>
+            </div>
+            <div class="row">
+                <?php
+                $castleOwnerGuildName = db::getCastleOwnerGuildName();
+                if (!empty($castleOwnerGuildName)) {
+                    echo '<h3>Castle Owner Guild: ' . $castleOwnerGuildName . '</h3><h5><small>Congratulations! Castle Siege happens every Saturday</small></h5><hr>';
+                }
+                ?>
+            </div>
             <div class="row">
                 <h4>Top 5 Players <small>Reset and Level</small></h4>
                 <div class="table-responsive">

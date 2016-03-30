@@ -553,4 +553,28 @@ class cacheDb
         }
         return [];
     }
+	
+	public static function saveLog($content, $ip) {
+		if (true === cacheDb::getCacheDbConnectionStatus()) {
+			$cacheDb = new cacheDb();
+			$sql = "
+			    INSERT INTO
+				    logs
+				    (
+					    content,
+						ip
+					) 
+				VALUES
+				    (
+					    :content,
+						:ip
+					)
+			";
+			$query = $cacheDb->pdo->prepare($sql);
+            $query->bindParam(':content', $content, PDO::PARAM_STR);
+			$query->bindParam(':ip', $ip, PDO::PARAM_STR);
+			return $query->execute();
+		}
+		return false;
+	}
 }

@@ -14,7 +14,7 @@
     <strong>Reset:</strong> 
     <ul>
         <li>Required level 400.</li>
-        <li>Paid 70,000,000.</li>
+        <li>Paid 35,000,000.</li>
         <li>Statistics are reset.</li>
         <li>You get 300 Level Up Points per reset.</li>
         <li>Inventory stays.</li>

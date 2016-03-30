@@ -23,6 +23,10 @@ date_default_timezone_set(CONFIG_SYSTEM_TIMEZONE);
 
 $common = new common();
 
+// Filter user input - GET AND POST only are used
+$_POST = $common->removeNotAllowedWords($_POST);
+$_GET = $common->removeNotAllowedWords($_GET);
+
 // Set the default module name
 $module = DEFAULT_MODULE_NAME;
 $action = '';
@@ -33,10 +37,10 @@ if (isset($_GET['module']) && !empty($_GET['module'])) {
         $module = $getModule;
     }
     if (isset($_GET['action']) && !empty($_GET['action'])) {
-    	$getAction = $common->secureStringVariable($_GET['action']);
-    	if (in_array($getAction, $systemModuleActions[$module])) {
+        $getAction = $common->secureStringVariable($_GET['action']);
+        if (in_array($getAction, $systemModuleActions[$module])) {
             $action = $getAction;
-    	}
+        }
     }
 }
 

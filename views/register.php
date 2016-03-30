@@ -75,7 +75,11 @@ if ($_POST) {
             echo '<div class="bg-danger info-box box-border">Captcha validation failed.</div>';
         }
     } else {
-        echo '<div class="bg-danger info-box box-border">Please fill all fields.</div>';
+		if (true === $common->checkIfAnyFieldsWereRemoved('post')) {
+			echo '<div class="bg-danger info-box box-border">Some information you provided were not accepted due to security reasons. Please follow the suggestions under each field (for login and password it is best to use random strings of letters, digits and special characters). Please try again.</div>';
+		} else {
+            echo '<div class="bg-danger info-box box-border">Please fill all fields.</div>';
+		}
     }
 }
 
@@ -84,7 +88,7 @@ if ($_POST) {
 <form class="form-signin" action="" method="post">
     <label for="inputUser" class="sr-only">User Name</label>
     <input type="user" name="user" id="inputUser" class="form-control" placeholder="User Name" value="<?php echo isset($username) ? $common->getFormPreviouslySentValue($username) : ''; ?>" aria-describedby="userHelpBlock" required autofocus>
-    <small id="userHelpBlock" class="help-block text-right">Between 4-10 characters (letters, digits and _ allowed). Case-sensitive.</small>
+    <small id="userHelpBlock" class="help-block text-right">Between 5-10 characters (letters, digits and _ allowed). Case-sensitive.</small>
     <label for="inputEmail" class="sr-only">Email Address</label>
     <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email Address" value="<?php echo isset($email) ? $common->getFormPreviouslySentValue($email) : ''; ?>" required><br>
 
@@ -94,7 +98,7 @@ if ($_POST) {
     
     <label for="inputRePassword" class="sr-only">Confirm Your Password</label>
     <input type="password" name="repassword" id="inputRePassword" class="form-control" placeholder="Confirm Your Password" required>
-    <small id="passwordHelpBlock" class="help-block text-right">At least 6 characters. Case-sensitive.</small>
+    <small id="passwordHelpBlock" class="help-block text-right">At least 6 characters (letters, digits and special chars ! @ # $ & * allowed). Case-sensitive.</small>
     <div id="countrySelect" class="bfh-selectbox bfh-countries align-left" data-country="PL" data-flags="true">
         <input type="hidden" value="">
         <!--<a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">

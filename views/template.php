@@ -48,6 +48,7 @@
                             <ul class="dropdown-menu">
                                 <li <?php echo ('score_ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=score_ranking">Score Ranking</a></li>
                                 <li <?php echo ('ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=ranking">Level Ranking</a></li>
+								
                             </ul>
                         </li>
                         <!--<li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>-->
@@ -57,7 +58,7 @@
                                 <li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li <?php echo ('server_information' === $module) ? 'class="active"' : '' ?>><a href="?module=server_information">Server Information</a></li>
-								<li <?php echo ('news' === $module) ? 'class="active"' : '' ?>><a href="?module=news">News Archive</a></li>
+                                <li <?php echo ('news' === $module) ? 'class="active"' : '' ?>><a href="?module=news">News Archive</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -86,7 +87,11 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
-        <div id="everwinterLogo"></div> 
+        <div id="everwinterLogo">
+            <div class="container">
+            <p class="text-right text-shadow" id="findOutMoreLink"><a href="?module=server_information" title="Server Information" class="label label-primary">Find out more about the server &nbsp;<span class="glyphicon glyphicon-hand-left"></span></a></p>
+            </div>
+        </div> 
         <div class="container">
                 <div id="header">
                         <!--MAIN-->

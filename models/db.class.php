@@ -18,7 +18,7 @@ class db
     {
         $pdo = NULL;
         try {
-            $pdo = new PDO('sqlsrv:server=' . CONFIG_DATABASE_HOST . ';Database=' . CONFIG_DATABASE_NAME . ';LoginTimeout=5', CONFIG_DATABASE_USER, CONFIG_DATABASE_PASSWORD);
+            $pdo = new PDO('sqlsrv:server=' . CONFIG_DATABASE_HOST . ';Database=' . CONFIG_DATABASE_NAME . ';LoginTimeout=5', CONFIG_DATABASE_USER, CONFIG_DATABASE_PASSWORD, [PDO::SQLSRV_ATTR_ENCODING => PDO::SQLSRV_ENCODING_UTF8]);
         } catch (PDOException $exception) {
             //echo $exception;
         }
@@ -117,8 +117,7 @@ class db
         $query->bindParam(':country', $country, PDO::PARAM_STR);
         $query->bindParam(':email', $email, PDO::PARAM_STR);
         $result = $query->execute();
-        return $result;
-
+        return $result; 
     }
 
     // Get characters for main ranking
@@ -927,25 +926,52 @@ class db
         }
         return [];
     }
-	
-	public static function getCastleOwnerGuildName() {
-		if (true === db::getDbConnectionStatus()) {
-			$sql = '
-				SELECT TOP 1
-					OWNER_GUILD
-				FROM 
-					MuCastle_DATA
-			';
-			$db = new db();
-			$query = $db->pdo->prepare($sql);
-			$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-			$query->execute();
-			$result = $query->fetch(PDO::FETCH_ASSOC);
+    
+    public static function getCastleOwnerGuildName() {
+        if (true === db::getDbConnectionStatus()) {
+            $sql = '
+                SELECT TOP 1
+                    OWNER_GUILD
+                FROM 
+                    MuCastle_DATA
+            ';
+            $db = new db();
+            $query = $db->pdo->prepare($sql);
+            $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $query->execute();
+            $result = $query->fetch(PDO::FETCH_ASSOC);
 
-			if (!empty($result)) {
-				return $result['OWNER_GUILD'];
+            if (!empty($result)) {
+                return $result['OWNER_GUILD'];
+            }
+        }
+        return '';
+    }
+	
+	public static function getGuildRanking($limit = 100, $castleOwnerBonus = 100) {
+		if (true === db::getDbConnectionStatus()) {
+		    $sql = '
+                SELECT TOP ' . $limit . '
+                    G_Name,
+					G_Mark,
+					G_Score + (SELECT CASE WHEN (SELECT OWNER_GUILD FROM MuCastle_DATA) = G_Name THEN ' . $castleOwnerBonus . ' ELSE 0 END) as G_Score,
+					G_Master,
+					G_Count
+                FROM 
+                    Guild
+				ORDER BY
+				    G_Score DESC, Number ASC, G_Name ASC
+            ';
+            $db = new db();
+            $query = $db->pdo->prepare($sql);
+            $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $query->execute();
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
+			
+			if (!empty($results)) {
+				return $results;
 			}
 		}
-		return '';
-    }
+		return [];
+	}
 }

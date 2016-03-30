@@ -3,7 +3,10 @@
 class common 
 {
     const SERVER_IP = '188.209.52.29';
-
+    
+    public $listOfNotAllowedWordsAndSigns = [';', '\'', '"', '-', '=', '`', 'ALTER', 'RAISERROR', 'FILLFACTOR', 'FOREIGN', 'RECONFIGURE', 'FREETEXT', 'REFERENCES', 'AUTHORIZATION', 'FREETEXTTABLE', 'REPLICATION', 'BACKUP', 'RESTORE', 'BEGIN', 'RESTRICT', 'BETWEEN', 'REVERT', 'BROWSE', 'GRANT', 'REVOKE', 'HAVING', 'ROLLBACK', 'CASCADE', 'HOLDLOCK', 'ROWCOUNT', 'IDENTITY', 'ROWGUIDCOL', 'IDENTITY_INSERT', 'CHECKPOINT', 'IDENTITYCOL', 'SCHEMA', 'CLUSTERED', 'SECURITYAUDIT', 'COALESCE', 'SELECT', 'COLLATE', 'INNER', 'SEMANTICKEYPHRASETABLE', 'COLUMN', 'INSERT', 'SEMANTICSIMILARITYDETAILSTABLE', 'COMMIT', 'INTERSECT', 'SEMANTICSIMILARITYTABLE', 'SESSION_USER', 'CONSTRAINT', 'CONTAINS', 'SETUSER', 'CONTAINSTABLE', 'SHUTDOWN', 'STATISTICS', 'SYSTEM_USER', 'CROSS', 'LINENO', 'TABLE', 'CURRENT', 'TABLESAMPLE', 'MERGE', 'TEXTSIZE', 'CURRENT_TIME', 'CURRENT_TIMESTAMP', 'NOCHECK', 'CURRENT_USER', 'NONCLUSTERED', 'CURSOR', 'DATABASE', 'NULL', 'TRANSACTION', 'DBCC', 'NULLIF', 'TRIGGER', 'DEALLOCATE', 'TRUNCATE', 'DECLARE', 'TRY_CONVERT', 'DEFAULT', 'OFFSETS', 'TSEQUAL', 'DELETE', 'UNION', 'UNIQUE', 'DESC', 'OPENDATASOURCE', 'UNPIVOT', 'OPENQUERY', 'UPDATE', 'OPENROWSET', 'UPDATETEXT', 'DISTRIBUTED', 'OPENXML', 'DOUBLE', 'OPTION', 'DROP', 'VALUES', 'VARYING', 'OUTER', 'WAITFOR', 'ERRLVL', 'PERCENT', 'ESCAPE', 'PIVOT', 'WHERE', 'EXCEPT', 'WHILE', 'EXEC', 'PRECISION', 'EXECUTE', 'PRIMARY', 'WITHIN GROUP', 'EXISTS', 'WRITETEXT'];
+    public $listOfExceptions = ['g-recaptcha-response'];
+    
     public $gameserverInformation = [
         'passive' => 56900,
         'active' => 56901
@@ -11,13 +14,13 @@ class common
 
     public function secureStringVariable($string) {
         if (!empty($string)) {
-            return filter_var($string, FILTER_SANITIZE_STRING);
+            return $this->sanitizeString(filter_var($string, FILTER_SANITIZE_STRING));
         }
     }
 
     public function secureEmailVariable($string) {
         if (!empty($string)) {
-            return filter_var($string, FILTER_SANITIZE_EMAIL);
+            return $this->sanitizeString(filter_var($string, FILTER_SANITIZE_EMAIL));
         }
     }
 
@@ -253,4 +256,78 @@ class common
             return $interval->format('%i minute(s)');
         }
     }
+    
+    public function removeNotAllowedWords($data) {
+        if (!empty($data)) {
+            cacheDb::saveLog(print_r($this->hideCharacters($data), true), $_SERVER['REMOTE_ADDR']);
+            foreach ($data as $key => $value) {
+                if (!empty($value)) {
+                    $noWhiteSpacesValue = $this->removeWhiteSpaces($value);
+                    if (!in_array($key, $this->listOfExceptions) && true === $this->checkIfStringContainsNotAllowedWords($noWhiteSpacesValue)) {
+                        unset($data[$key]);
+						$data['removed_fields'][] = $key;
+                    }
+                }
+            }
+        }
+        return $data;
+    }
+    
+    public function hideCharacters($data) {
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                if (in_array($key, ['password', 'repassword', 'oldpassword'])) {
+                    if (3 < strlen($value)) {
+                        for ($x = 0; $x < 4; $x++) {
+                            $value[$x] = '*';
+                        }
+                        $data[$key] = $value;
+                    }
+                }
+            }
+        }
+        return $data;
+    }
+    
+    public function removeWhiteSpaces($string) {
+        return preg_replace('/\s+/', '', $string);
+    }
+    
+    public function checkIfStringContainsNotAllowedWords($string) {
+        foreach ($this->listOfNotAllowedWordsAndSigns as $notAllowedWord) {
+            if (false !== strpos(strtolower($string), strtolower($notAllowedWord))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function mysqlEscapeMimic($string) { 
+        if (is_array($string)) {
+            return array_map(__METHOD__, $string); 
+        }
+        if(!empty($string) && is_string($string)) { 
+            return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $string); 
+        } 
+        return $string; 
+    }
+    
+    public function sanitizeString($string) {
+        if (!empty($string)) {
+            $string = $this->mysqlEscapeMimic(stripslashes($string));
+        }
+        return $string;
+    }
+	
+	public function checkIfAnyFieldsWereRemoved($type) {
+		if ('post' === $type) {
+			$data = $_POST;
+		} elseif ('get' === $type) {
+			$data = $_GET;
+		}
+		if (isset($data['removed_fields'])) {
+			return true;
+		}
+		return false;
+	}
 }

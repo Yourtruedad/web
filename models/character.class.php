@@ -45,6 +45,12 @@ class character {
     public static $characterLevelUpPointSystemName = 'LevelUpPoint';
     public static $characterMoneySystemName = 'Money';
     public static $characterMainRankingScoreSystemName = 'Score';
+	
+	public static $guildNameSystemName = 'G_Name';
+	public static $guildMarkSystemName = 'G_Mark';
+	public static $guildScoreSystemName = 'G_Score';
+	public static $guildMasterSystemName = 'G_Master';
+	public static $guildCountSystemName = 'G_Count';
 
     public static $characterMaxLevel = 400;
 
