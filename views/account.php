@@ -148,9 +148,9 @@ switch ($action) {
                         if (false !== $moneySource) {
                             $subtractMoneyResult = false;
                             if ('inventory' === $moneySource['source']) {
-                                $subtractMoneyResult = $db->subtractMoneyFromInventory($characterDetails['Name'], CHARACTER_RESET_COST);
+                                $subtractMoneyResult = $db->subtractMoneyFromInventory($characterDetails['Name'], $character->getCharacterResetCost($characterDetails['Name']));
                             } elseif ('warehouse' === $moneySource['source']) {
-                                $subtractMoneyResult = $db->subtractMoneyFromWarehouse($accountId, CHARACTER_RESET_COST);
+                                $subtractMoneyResult = $db->subtractMoneyFromWarehouse($accountId, $character->getCharacterResetCost($characterDetails['Name']));
                             }
                             // If money taken, reset stats
                             if (true === $subtractMoneyResult) {
@@ -180,7 +180,7 @@ switch ($action) {
     break;
     default:
         if ($_POST) {
-            $username = $common->trimString($common->secureStringVariable($_POST['user']), MAX_USER_NAME_LENGTH);
+            $username = $common->trimString($common->secureStringVariable($_POST['user']), 20);
             $password = $common->trimString($common->secureStringVariable($_POST['password']), MAX_PASSWORD_LENGTH);
 
             if (!empty($username) && !empty($password)) {
@@ -234,7 +234,7 @@ switch ($action) {
                             </div>
                             <div class="width70percent left-margin pull-left table-responsive">
                                 <table class="table table-hover">
-                                <tr><td class="width20percent"><strong>Level</strong></td><td class="width60percent">' . $character[character::$characterLevelSystemName] . ((character::$characterMaxLevel == $character[character::$characterLevelSystemName]) ? '&nbsp;&nbsp;&nbsp;<a href="?module=account&action=reset&name=' . $character[character::$characterNameSystemName] . '" title="Reset" onclick="return confirm(\'Are you sure?\')">Click here to reset this character</a><div class="bg-primary info-box box-border top-margin">You need to have at least ' . number_format(CHARACTER_RESET_COST) . ' zen in either your inventory or warehouse to be able to reset your character.</div>' : '') . '</td></tr>
+                                <tr><td class="width20percent"><strong>Level</strong></td><td class="width60percent">' . $character[character::$characterLevelSystemName] . ((character::$characterMaxLevel == $character[character::$characterLevelSystemName]) ? '&nbsp;&nbsp;&nbsp;<a href="?module=account&action=reset&name=' . $character[character::$characterNameSystemName] . '" title="Reset" onclick="return confirm(\'Are you sure?\')">Click here to reset this character</a><div class="bg-primary info-box box-border top-margin">You need to have at least ' . number_format((new character)->getCharacterResetCost($character[character::$characterNameSystemName])) . ' zen in either your inventory or warehouse to be able to reset your character.</div>' : '') . '</td></tr>
                                     <tr><td><strong>Master Level</strong></td><td>' . $character[character::$characterMasterLevelSystemName] . '</td></tr>
                                     <tr><td><strong>Reset</strong></td><td>' . $character[character::$characterResetSystemName] . '</td></tr>
                                     <tr><td><strong>Strength</strong></td><td>' . $character[character::$characterStrengthSystemName] . '</td></tr>

@@ -1,0 +1,56 @@
+Array
+(
+    [protection_eligibility] => Eligible
+    [payer_id] => 2D9AE3B99N2FA
+    [payment_date] => 06:00:59 May 04, 2016 PDT
+    [payment_status] => Refunded
+    [address_zip] => 16423
+    [first_name] => andrus
+    [option_selection1] => 2000 Wcoin
+    [address_country_code] => EE
+    [address_name] => andrus gaidar
+    [notify_version] => 3.8
+    [reason_code] => refund
+    [custom] => 2239pq0249svo0an656a62nda92p73qd
+    [business] => reklamyptc@gmail.com
+    [address_country] => Estonia
+    [address_city] => tallinn
+    [payer_email] => andrusggg@hot.ee
+    [option_name1] => Wcoin
+    [parent_txn_id] => 0KR98483YT732551E
+    [txn_id] => 8WG11446M1052954T
+    [payment_type] => instant
+    [btn_id] => 111946352
+    [last_name] => gaidar
+    [address_state] => harjumaa
+    [receiver_email] => reklamyptc@gmail.com
+    [shipping_discount] => 0.00
+    [receiver_id] => Z9RAH3BHF345C
+    [insurance_amount] => 0.00
+    [item_name] => Wcoin
+    [discount] => 0.00
+    [mc_currency] => USD
+    [item_number] => Wcoin
+    [residence_country] => EE
+    [handling_amount] => 0.00
+    [transaction_subject] => 
+    [shipping] => 0.00
+    [ipn_track_id] => c58906d37bcea
+    [removed_fields] => Array
+        (
+            [0] => mc_gross
+            [1] => address_street
+            [2] => charset
+            [3] => mc_fee
+            [4] => verify_sign
+            [5] => payment_fee
+            [6] => shipping_method
+            [7] => payment_gross
+        )
+
+)
+Array
+(
+    [module] => pingback_listener
+    [vendor] => paypal
+)

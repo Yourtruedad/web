@@ -66,6 +66,12 @@ body {
 .padding-right {
     padding-right: 10px;
 }
+.text-shadow {
+    text-shadow: 4px 4px 10px rgba(150, 150, 150, 1);
+}
+.text-black {
+    color: #000000;
+}
 
 /* Custom elements */
 #logo {
@@ -99,6 +105,11 @@ body {
 #eventList {
     height: 250px;
     overflow-y:auto;
+}
+
+#findOutMoreLink {
+    position:relative;
+    top:205px;
 }
 /* --- */
 

@@ -21,7 +21,8 @@ class server
         'Last Man Standing' => ['type' => 'specific', 'details' => ['day' => 'everyday', 'times' => ['08:00', '14:00', '20:00', '23:30']]],
         'Loren Deep' => ['type' => 'specific', 'details' => ['day' => 'everyday', 'times' => ['09:00', '21:00']]],
         'Santa Claus' => ['type' => 'specific', 'details' => ['day' => 'everyday', 'times' => ['01:20', '07:20', '13:20', '19:20']]],
-        //'EXAMPLE RECURRING EVENT' => ['type' => 'recurring', 'details' => ['time_unit' => 'hour', 'value' => 4]],
+        'Golden Invasion' => ['type' => 'specific', 'details' => ['day' => 'everyday', 'times' => ['02:30', '10:30', '18:30', '22:30']]],
+		//'EXAMPLE RECURRING EVENT' => ['type' => 'recurring', 'details' => ['time_unit' => 'hour', 'value' => 4]],
     ];
 
     public static $serverLevelRankingTopPlayersLimit = 100;
@@ -210,5 +211,69 @@ class server
 		$it .= '</table>';
 		// What do we output
 		return $it;
+    }
+	
+	public static function getServerLastOfflineDate() {
+		$lastOnlineDate = '';
+		if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+			$cacheServerStatusInformationNames = ['active_game_status', 'passive_game_status'];
+			$cacheDb = new cacheDb();
+			$serverStatuses = $cacheDb->getServerAvailabilityStatuses($cacheServerStatusInformationNames);
+			if (!empty($serverStatuses)) {
+				foreach ($serverStatuses as $serverStatus) {
+					if ('offline' === $serverStatus['value']) {
+						return $serverStatus['created_on'];
+					} else {
+						$lastOnlineDate = $serverStatus['created_on'];
+					}
+				}
+			}
+		}
+		return $lastOnlineDate;
+	}
+	
+	public static function getServerOnlineDuration() {
+		$lastOfflineDate = server::getServerLastOfflineDate();
+		$serverOnlineDuration = '';
+		if (!empty($lastOfflineDate)) {
+			$common = new common();
+			$serverOnlineDuration = $common->calculateTimeDifference($lastOfflineDate, common::currentDate(), 'days');
+			if ('2' > $serverOnlineDuration) {
+				$serverOnlineDuration = $common->calculateTimeDifference($lastOfflineDate, common::currentDate());
+			}
+		}
+		return $serverOnlineDuration;
+	}
+	
+	public static function getGuildRanking($top = 100) {
+        $guildRanking = [];
+        $character = new character();
+        if (true === USE_MYSQL_CACHE && true === cacheDb::getCacheDbConnectionStatus()) {
+            $cacheDb = new cacheDb();
+            if (true === $cacheDb->checkIfScoreRankingIsCurrent()) {
+                $guildRanking = $cacheDb->getCurrentScoreRanking();
+                if (empty($guildRanking)) {
+                    $guildRanking = $character->getMainCharacterRanking();
+                }
+            } else {
+                $guildRanking = $character->getMainCharacterRanking();
+                $cacheDb->saveScoreRankingStandings($guildRanking);
+            }
+        } else {
+            $guildRanking = $character->getMainCharacterRanking();
+        }
+        if (!empty($guildRanking)) {
+            $guildRanking = array_slice($guildRanking, 0, $top);
+        }
+        return $guildRanking;
+    }
+	
+	public function getPlayerOfTheWeek() {
+		$cacheDb = new cacheDb();
+        $playerOfTheWeek = $cacheDb->getPlayerOfTheWeek();
+        if (!empty($playerOfTheWeek)) {
+            return $playerOfTheWeek['name'];
+        }
+        return '';
     }
 }

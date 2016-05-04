@@ -4,7 +4,7 @@ class common
 {
     const SERVER_IP = '188.209.52.29';
     
-    public $listOfNotAllowedWordsAndSigns = [';', '\'', '"', '-', '=', '`', 'ALTER', 'RAISERROR', 'FILLFACTOR', 'FOREIGN', 'RECONFIGURE', 'FREETEXT', 'REFERENCES', 'AUTHORIZATION', 'FREETEXTTABLE', 'REPLICATION', 'BACKUP', 'RESTORE', 'BEGIN', 'RESTRICT', 'BETWEEN', 'REVERT', 'BROWSE', 'GRANT', 'REVOKE', 'HAVING', 'ROLLBACK', 'CASCADE', 'HOLDLOCK', 'ROWCOUNT', 'IDENTITY', 'ROWGUIDCOL', 'IDENTITY_INSERT', 'CHECKPOINT', 'IDENTITYCOL', 'SCHEMA', 'CLUSTERED', 'SECURITYAUDIT', 'COALESCE', 'SELECT', 'COLLATE', 'INNER', 'SEMANTICKEYPHRASETABLE', 'COLUMN', 'INSERT', 'SEMANTICSIMILARITYDETAILSTABLE', 'COMMIT', 'INTERSECT', 'SEMANTICSIMILARITYTABLE', 'SESSION_USER', 'CONSTRAINT', 'CONTAINS', 'SETUSER', 'CONTAINSTABLE', 'SHUTDOWN', 'STATISTICS', 'SYSTEM_USER', 'CROSS', 'LINENO', 'TABLE', 'CURRENT', 'TABLESAMPLE', 'MERGE', 'TEXTSIZE', 'CURRENT_TIME', 'CURRENT_TIMESTAMP', 'NOCHECK', 'CURRENT_USER', 'NONCLUSTERED', 'CURSOR', 'DATABASE', 'NULL', 'TRANSACTION', 'DBCC', 'NULLIF', 'TRIGGER', 'DEALLOCATE', 'TRUNCATE', 'DECLARE', 'TRY_CONVERT', 'DEFAULT', 'OFFSETS', 'TSEQUAL', 'DELETE', 'UNION', 'UNIQUE', 'DESC', 'OPENDATASOURCE', 'UNPIVOT', 'OPENQUERY', 'UPDATE', 'OPENROWSET', 'UPDATETEXT', 'DISTRIBUTED', 'OPENXML', 'DOUBLE', 'OPTION', 'DROP', 'VALUES', 'VARYING', 'OUTER', 'WAITFOR', 'ERRLVL', 'PERCENT', 'ESCAPE', 'PIVOT', 'WHERE', 'EXCEPT', 'WHILE', 'EXEC', 'PRECISION', 'EXECUTE', 'PRIMARY', 'WITHIN GROUP', 'EXISTS', 'WRITETEXT'];
+    public $listOfNotAllowedWordsAndSigns = [';', '\'', '"', '-', '=', '`', 'ALTER', 'RAISERROR', 'FILLFACTOR', 'FOREIGN', 'RECONFIGURE', 'FREETEXT', 'REFERENCES', 'AUTHORIZATION', 'FREETEXTTABLE', 'REPLICATION', 'BACKUP', 'RESTORE', 'BEGIN', 'RESTRICT', 'BETWEEN', 'REVERT', 'BROWSE', 'GRANT', 'REVOKE', 'HAVING', 'ROLLBACK', 'CASCADE', 'HOLDLOCK', 'ROWCOUNT', 'IDENTITY', 'ROWGUIDCOL', 'IDENTITY_INSERT', 'CHECKPOINT', 'IDENTITYCOL', 'SCHEMA', 'CLUSTERED', 'SECURITYAUDIT', 'COALESCE', 'SELECT', 'COLLATE', 'INNER', 'SEMANTICKEYPHRASETABLE', 'COLUMN', 'INSERT', 'SEMANTICSIMILARITYDETAILSTABLE', 'COMMIT', 'INTERSECT', 'SEMANTICSIMILARITYTABLE', 'SESSION_USER', 'CONSTRAINT', 'CONTAINS', 'SETUSER', 'CONTAINSTABLE', 'SHUTDOWN', 'STATISTICS', 'SYSTEM_USER', 'CROSS', 'LINENO', 'TABLE', 'CURRENT', 'TABLESAMPLE', 'MERGE', 'TEXTSIZE', 'CURRENT_TIME', 'CURRENT_TIMESTAMP', 'NOCHECK', 'CURRENT_USER', 'NONCLUSTERED', 'CURSOR', 'DATABASE', 'NULL', 'TRANSACTION', 'DBCC', 'NULLIF', 'TRIGGER', 'DEALLOCATE', 'TRUNCATE', 'DECLARE', 'TRY_CONVERT', 'DEFAULT', 'OFFSETS', 'TSEQUAL', 'DELETE', 'UNION', 'UNIQUE', 'DESC', 'OPENDATASOURCE', 'UNPIVOT', 'OPENQUERY', 'UPDATE', 'OPENROWSET', 'UPDATETEXT', 'DISTRIBUTED', 'OPENXML', 'OPTION', 'DROP', 'VALUES', 'VARYING', 'OUTER', 'WAITFOR', 'ERRLVL', 'PERCENT', 'ESCAPE', 'PIVOT', 'WHERE', 'EXCEPT', 'WHILE', 'EXEC', 'PRECISION', 'EXECUTE', 'PRIMARY', 'WITHIN GROUP', 'EXISTS', 'WRITETEXT'];
     public $listOfExceptions = ['g-recaptcha-response'];
     
     public $gameserverInformation = [
@@ -242,19 +242,24 @@ class common
         return common::subTimeFromDate(date($format), $format, CONFIG_TIMEZONE_MANUAL_ADJUST, 'H');
     }
     
-    public static function calculateTimeDifference($date, $date2) {
+    public static function calculateTimeDifference($date, $date2, $short = NULL) {
         $dateDiff = new DateTime($date);
         $dateDiff2 = new DateTime($date2);
         $interval = date_diff($dateDiff, $dateDiff2);
         
         $timeDifference = strtotime($date2) - strtotime($date);
         if ($timeDifference > 86400) {
-            return $interval->format('%d day %h hour(s) and %i minute(s)');
+			if ('days' === $short) {
+				$format = '%d';
+			} else {
+                $format = '%d day %h hour(s) and %i minute(s)';
+			}
         } elseif ($timeDifference > 3600) {
-            return $interval->format('%h hour(s) and %i minute(s)');
+            $format = '%h hour(s) and %i minute(s)';
         } else {
-            return $interval->format('%i minute(s)');
+            $format = '%i minute(s)';
         }
+		return $interval->format($format);
     }
     
     public function removeNotAllowedWords($data) {
@@ -329,5 +334,16 @@ class common
 			return true;
 		}
 		return false;
+	}
+	
+	public function getLastWeekDates() {
+		$lastWeekNumber = date('W', strtotime('last week'));
+		$lastWeekYear = date('Y', strtotime('last week'));
+		$lastWeekDates = [];
+		for($day=1; $day<=7; $day++)
+		{
+			$lastWeekDates[] = date('Y-m-d', strtotime($lastWeekYear . "W" . $lastWeekNumber . $day));
+		}
+		return $lastWeekDates;
 	}
 }

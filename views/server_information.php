@@ -14,11 +14,11 @@
     <strong>Reset:</strong> 
     <ul>
         <li>Required level 400.</li>
-        <li>Paid 35,000,000.</li>
-        <li>Statistics are reset.</li>
+        <li>Paid 35,000,000 + 1,000,000 for every reset you have.</li>
+        <li>All stats are reset.</li>
         <li>You get 300 Level Up Points per reset.</li>
         <li>Inventory stays.</li>
-        <li>Master Level and the Master Skill tree are reset.</li>
+        <li>The Master Level and Master Skill tree are reset.</li>
         <li>Up to 50 resets.</li>
     </ul>
 </p>
@@ -27,7 +27,7 @@
     <ul>
         <li>Required level 400 and 50 resets.</li>
         <li>Paid 100,000,000.</li>
-        <li>Statistics are reset. You get 1000 points.</li>
+        <li>All stats are reset. You get 1000 points.</li>
         <li>Up to 2 GRs.</li>
         <li>You get 10.000 goblin points.</li>
     </ul>

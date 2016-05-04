@@ -1,11 +1,11 @@
 <h1>Guild Ranking</h1>
-<p class="lead"></p>
+<p class="lead">See below the list of guild on our server. Team up and fight for the castle.</p>
 
 <?php
 
 $server = new server();
 $character = new character();
-$character->hideRankingguildDetails = true;
+//$character->hideRankingguildDetails = true;
 
 $guildRanking = db::getGuildRanking();//server::getCharacterScoreRanking(server::$serverScoreRankingTopPlayersLimit);
 
@@ -22,7 +22,7 @@ if (!empty($guildRanking)) {
                     <td>' . $guildDetails[character::$guildNameSystemName] . '</td>
                     <td>' . $server->drawGuildMark($guildDetails[character::$guildMarkSystemName]) . '</td>
                     <td>' . $guildDetails[character::$guildMasterSystemName] . '</td>
-					
+					<td>' . $guildDetails[character::$guildMemberCountSystemName] . '</td>
                 </tr>';
         }
         ?>

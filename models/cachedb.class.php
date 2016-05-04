@@ -577,4 +577,75 @@ class cacheDb
 		}
 		return false;
 	}
+	
+	public function getServerAvailabilityStatuses(array $serverInformationNames) {
+		if (!empty($serverInformationNames)) {
+			$serverNames = '\'' . implode('\',\'', $serverInformationNames) . '\'';
+			$sql = '
+				SELECT
+					si.id,
+					si.name,
+					sid.created_on,
+					sid.value
+				FROM
+					server_information si
+				JOIN 
+					server_information_details sid
+				ON
+					si.id = sid.server_informations_id
+				WHERE
+					si.name IN (' . $serverNames . ')
+				AND
+					sid.created_on > NOW() - INTERVAL 7 DAY
+				GROUP BY 
+				    YEAR(sid.created_on), MONTH(sid.created_on), DAY(sid.created_on), HOUR(sid.created_on), MINUTE(sid.created_on)
+				ORDER BY 
+			        sid.created_on DESC, sid.value DESC, sid.server_informations_id ASC
+			';
+
+			$query = $this->pdo->query($sql);
+			$results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+			if (!empty($results)) {
+				return $results;
+			}
+		}
+        return [];
+	}
+	
+	public function getPlayerOfTheWeek() {
+		$common = new common();
+		$lastWeekDates = $common->getLastWeekDates();
+        $sql = '
+            SELECT 
+			    name, 
+				sum(score) as total_score, 
+				sum(standing) as total_standing 
+		    FROM 
+			    `score_ranking_standings` srs 
+			JOIN 
+			    score_rankings sr 
+			ON 
+			    srs.`score_rankings_id` = sr.id 
+			WHERE 
+			    created_on >= :startDate
+		    AND 
+			    created_on <= :endDate
+			GROUP BY 
+			    name 
+			ORDER BY 
+			    sum(score) DESC, 
+				sum(standing) ASC
+			LIMIT 1
+        ';
+        $query = $this->pdo->prepare($sql);
+		$query->bindParam(':startDate', current($lastWeekDates), PDO::PARAM_STR);
+		$query->bindParam(':endDate', end($lastWeekDates), PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if (!empty($result)) {
+            return $result;
+        }
+		return [];
+    }
 }

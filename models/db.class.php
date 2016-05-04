@@ -425,20 +425,23 @@ class db
     }
 
     public function subtractMoneyFromInventory($name, $amount) {
-        $sql = "
-            UPDATE 
-                Character
-            SET
-                Money = (Money - :amount)
-            WHERE
-                Name = :name
-        ";
-        $query = $this->pdo->prepare($sql);
-        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        $query->bindParam(':amount', $amount, PDO::PARAM_INT);
-        $query->bindParam(':name', $name, PDO::PARAM_STR);
-        $result = $query->execute();
-        return $result;
+		if (!empty($name) && !empty($amount)) {
+			$sql = "
+				UPDATE 
+					Character
+				SET
+					Money = (Money - :amount)
+				WHERE
+					Name = :name
+			";
+			$query = $this->pdo->prepare($sql);
+			$query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			$query->bindParam(':amount', $amount, PDO::PARAM_INT);
+			$query->bindParam(':name', $name, PDO::PARAM_STR);
+			$result = $query->execute();
+			return $result;
+		}
+		return false;
     }
 
     public function getClassDefaultStats($class) {
@@ -954,13 +957,21 @@ class db
                 SELECT TOP ' . $limit . '
                     G_Name,
 					G_Mark,
-					G_Score + (SELECT CASE WHEN (SELECT OWNER_GUILD FROM MuCastle_DATA) = G_Name THEN ' . $castleOwnerBonus . ' ELSE 0 END) as G_Score,
+					G_Score + (SELECT CASE WHEN (SELECT OWNER_GUILD FROM MuCastle_DATA) = G_Name THEN ' . $castleOwnerBonus . ' ELSE 0 END) AS G_Score,
 					G_Master,
-					G_Count
+					G_Count,
+					(
+					    SELECT 
+						    count(*)
+						FROM
+						    GuildMember
+						WHERE 
+						    Guild.G_Name = GuildMember.G_Name
+					) AS G_MemberCount
                 FROM 
                     Guild
 				ORDER BY
-				    G_Score DESC, Number ASC, G_Name ASC
+				    G_Score DESC, G_MemberCount DESC, Number ASC, G_Name ASC
             ';
             $db = new db();
             $query = $db->pdo->prepare($sql);
@@ -971,6 +982,39 @@ class db
 			if (!empty($results)) {
 				return $results;
 			}
+		}
+		return [];
+	}
+	
+	public function getGuildDetails($name) {
+	    $sql = '
+            SELECT 
+                G_Name,
+				G_Mark,
+				G_Score,
+				G_Master,
+				G_Count,
+				(
+					SELECT 
+						count(*)
+				    FROM
+						GuildMember
+				    WHERE 
+						Guild.G_Name = GuildMember.G_Name
+				) AS G_MemberCount
+            FROM 
+                Guild
+		    WHERE
+				G_Name = :name
+            ';
+        $query = $this->pdo->prepare($sql);
+        $query->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		$query->bindParam(':name', $name, PDO::PARAM_STR);
+        $query->execute();
+        $results = $query->fetch(PDO::FETCH_ASSOC);
+		
+		if (!empty($results)) {
+			return $results;
 		}
 		return [];
 	}

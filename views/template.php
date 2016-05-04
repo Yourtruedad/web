@@ -48,7 +48,7 @@
                             <ul class="dropdown-menu">
                                 <li <?php echo ('score_ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=score_ranking">Score Ranking</a></li>
                                 <li <?php echo ('ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=ranking">Level Ranking</a></li>
-								
+								<li <?php echo ('guild_ranking' === $module) ? 'class="active"' : '' ?>><a href="?module=guild_ranking">Guild Ranking</a></li>
                             </ul>
                         </li>
                         <!--<li><a href="http://forum.everwintermu.com" title="Message Board" target="_blank">Message Board</a></li>-->

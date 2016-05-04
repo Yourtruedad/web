@@ -51,6 +51,7 @@ class character {
 	public static $guildScoreSystemName = 'G_Score';
 	public static $guildMasterSystemName = 'G_Master';
 	public static $guildCountSystemName = 'G_Count';
+	public static $guildMemberCountSystemName = 'G_MemberCount';
 
     public static $characterMaxLevel = 400;
 
@@ -141,19 +142,33 @@ class character {
             if (!empty($characterAccountId)) {
                 $warehouseMoney = $db->getAccountWarehouseMoney($characterAccountId['AccountID']);
             }
-            if (!empty($inventoryMoney)) {
-                if ($inventoryMoney['Money'] >= CHARACTER_RESET_COST) {
-                    return ['source' => 'inventory'];
-                }
-            }
-            if (!empty($warehouseMoney)) {
-                if ($warehouseMoney['Money'] >= CHARACTER_RESET_COST) {
-                    return ['source' => 'warehouse'];
-                }
-            }
+			$characterResetCost = $this->getCharacterResetCost($name);
+			if (!empty($characterResetCost)) {
+				if (!empty($inventoryMoney)) {
+					if ($inventoryMoney['Money'] >= $characterResetCost) {
+						return ['source' => 'inventory'];
+					}
+				}
+				if (!empty($warehouseMoney)) {
+					if ($warehouseMoney['Money'] >= $characterResetCost) {
+						return ['source' => 'warehouse'];
+					}
+				}
+			}
         }
         return false;
     }
+	
+	public function getCharacterResetCost($name) {
+		if (!empty($name)) {
+			$db = new db();
+			$characterDetails = $db->getCharacterDetails($name);
+			if (!empty($characterDetails)) {
+			    return CHARACTER_RESET_COST + ($characterDetails['Reset'] * CHARACTER_RESET_COST_STEP);
+			}
+		}
+		return '';
+	}
 
     public static function getCharacterDefaultClass($id) {
         if (in_array($id, array_keys(self::$characterClassDetails))) {
